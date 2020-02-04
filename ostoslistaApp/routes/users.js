@@ -17,6 +17,17 @@ router.route('/kuvahaku/:id')
         console.log(data)
         res.json(data)
       })
+      .post('/', function (req, res, next) {
+        console.log("post pyyntö laitettu");
+        console.dir(req.body);
+        // var ostos = req.body;
+        // ostoslista.push(henkilo);
+        // console.dir(henkilolista);
+        fs.writeFile('ostokset.json', JSON.stringify(req.body), () => { console.log("Ostokset tallennettu") })
+        // res.render('kuittaus', { title: 'kiitos, '+henkilo.name });
+        // res.send(`<h1>Post: Henkilon tiedot: ${req.body.name}, ${req.body.email}, ${req.body.gender}.<h1>`);
+        // res.render('lomake', { title: 'lomake', vastaanotettu: `Kiitos!<br>Nimi: ${req.body.name}<br>s-posti: ${req.body.email}<br>Sukupuoli: ${req.body.gender}` });
+      })
   });
 
 module.exports = router;
