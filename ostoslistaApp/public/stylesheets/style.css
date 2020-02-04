@@ -37,6 +37,7 @@ section {
   grid-row-end: 5;
   padding: 20px;
   border-radius: 0 0 0px 20px; 
+  overflow-y: scroll;
 }
 
 aside {
