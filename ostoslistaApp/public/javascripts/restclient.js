@@ -1,3 +1,5 @@
+import { response } from "express";
+
 const hakubtn = document.querySelector("#lisaa");
 
 function yliviivaus() {
@@ -17,9 +19,17 @@ function poista() {
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length - 1);
 
-    //luodaan DELETE -fetch-pyyntö.
-    // fetch("http://localhost:3000/api/users/" + hakusana)
-    
+    // luodaan DELETE -fetch-pyyntö. 
+    fetch("http://localhost:3000/api/users/", { //pitääkö olla await???? -otto
+        method: "DELETE",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(ostos)
+    })
+    .then(response => response.json())
+    .then(data => console.log("poisto onnistunut, vastaus: " + data));
+
     listaelementti.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
 }
 
@@ -55,7 +65,7 @@ function lisääListalle(hakusana, maara) {
 function hae() {
     const hakusana = document.querySelector("#hakusana").value; //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
     const maara = document.querySelector("#maara").value;
-    console.log(hakusana);
+
     fetch("http://localhost:3000/api/users/" + hakusana)
         .then(vastaus => vastaus.json())
         .then(data => {
