@@ -1,4 +1,4 @@
-import { response } from "express";
+//import { response } from "express";
 
 const hakubtn = document.querySelector("#lisaa");
 
@@ -40,7 +40,7 @@ function muokkaa() {
 function lisääListalle(hakusana, maara) {
     let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
     let ostos = document.createElement('li'); //luodaan uusi lista-elementti
-    ostos.innerHTML = `${hakusana} * ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
+    ostos.innerHTML = `${hakusana} x ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
     let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
     nappitehty.innerText = "Tehty"; //napin tekstiksi Tehty
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
