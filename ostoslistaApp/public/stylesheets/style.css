@@ -9,36 +9,35 @@ a {
 }
 
 .yliviivaus {
-  text-decoration: overline;
+  text-decoration: line-through;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
   grid-template-rows: 150px 150px 150px 150px;
-  border-radius: 10px;
 }
 
 header {
-  background-color: blue;
+  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 5;
   text-align: center;
-  padding-top: 20px;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
 }
 
 section {
-  background-color: blueviolet;
+  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 2 ;
   grid-row-end: 4;
-  text-align: center;
-  padding: 10px;
+  padding: 20px;
 }
 
 aside {
-  background-color: cornflowerblue;
+  background-color:whitesmoke;
   grid-column-start: 3;
   grid-column-end: 5;
   grid-row-start: 2 ;
@@ -48,10 +47,28 @@ aside {
 }
 
 footer {
-  background-color: cadetblue;
+  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 5;
   grid-row-start: 4 ;
   grid-row-end: 4;
   text-align: center;
+  border-radius: 0 0 20px 20px;
+}
+
+#tuotekuva {
+  max-width: 55%;
+  max-height: auto;
+}
+
+form {
+  margin-bottom: 50px;
+}
+
+.output {
+background-color: tomato;
+}
+
+li {
+  padding: 5px;
 }
