@@ -10,7 +10,7 @@ function yliviivaus() {
 function poista() {
     let nappi = this;
     let ostos = nappi.parentElement;
-    ostos.remove();
+    ostos.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
 }
 
 function lisääListalle(hakusana) {
@@ -32,7 +32,7 @@ nappipoista.addEventListener('click', poista);
 function hae() {
     const hakusana = document.querySelector("#hakusana").value; //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
     console.log(hakusana);
-    fetch("http://localhost:3000/api/users/kuvahaku/" + hakusana)
+    fetch("http://localhost:3000/api/users" + hakusana)
     .then(vastaus => vastaus.json())
     .then(data => {
         console.log(data);
