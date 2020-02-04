@@ -8,9 +8,19 @@ function yliviivaus() {
 }
 
 function poista() {
+    //kaikki tämä regex-hulluus johtuu siitä, että listaelementin sisältöön kuuluu muutakin, kuin ostoksen nimi. älä kysy. -otto
     let nappi = this;
-    let ostos = nappi.parentElement;
-    ostos.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
+    let listaelementti = nappi.parentElement;
+    let listateksti = listaelementti.innerHTML;
+    let regex = /^[A-Z ]+/i;
+    let ostos = listateksti.match(regex);
+    ostos = ostos[0];
+    ostos = ostos.substring(0, ostos.length - 1);
+
+    //luodaan DELETE -fetch-pyyntö.
+    // fetch("http://localhost:3000/api/users/" + hakusana)
+    
+    listaelementti.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
 }
 
 function muokkaa() {
@@ -18,23 +28,28 @@ function muokkaa() {
 }
 
 function lisääListalle(hakusana, maara) {
-let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
-let ostos = document.createElement('li'); //luodaan uusi lista-elementti
-ostos.innerHTML = `${hakusana} * ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
-let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
-nappitehty.innerText = "Tehty"; //napin tekstiksi Tehty
-let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
-nappipoista.innerText = "Poista"; //napin tekstiksi Poista
-let nappimuokkaa = document.createElement("button");
-nappimuokkaa.innerText = "Muokkaa"
-ostos.appendChild(nappitehty); //lisätään ostos-html elementiin nappitehty
-ostos.appendChild(nappipoista); //listään ostos-html elementiin nappipoista
-ostos.appendChild(nappimuokkaa); //lisätään ostos-elementille nappi muokkaa
-lista.appendChild(ostos); //julkaistaan koko höskä
+    let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
+    let ostos = document.createElement('li'); //luodaan uusi lista-elementti
+    ostos.innerHTML = `${hakusana} * ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
+    let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
+    nappitehty.innerText = "Tehty"; //napin tekstiksi Tehty
+    let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
+    nappipoista.innerText = "Poista"; //napin tekstiksi Poista
+    let nappimuokkaa = document.createElement("button");
+    nappimuokkaa.innerText = "Muokkaa"
+    ostos.appendChild(nappitehty); //lisätään ostos-html elementiin nappitehty
+    ostos.appendChild(nappipoista); //listään ostos-html elementiin nappipoista
+    ostos.appendChild(nappimuokkaa); //lisätään ostos-elementille nappi muokkaa
+    lista.appendChild(ostos); //julkaistaan koko höskä
 
-nappitehty.addEventListener('click', yliviivaus); //lisätään napille toiminto "yliviivaus"
-nappipoista.addEventListener('click', poista); // lisätään napille toiminto "poista"
-nappimuokkaa.addEventListener("click", muokkaa);
+    nappitehty.addEventListener('click', yliviivaus); //lisätään napille toiminto "yliviivaus"
+    nappipoista.addEventListener('click', poista); // lisätään napille toiminto "poista"
+    nappimuokkaa.addEventListener("click", muokkaa);
+
+    //annetaan napeille vielä id:t -otto
+    nappitehty.classList.add("nappitehty");
+    nappiposta.classList.add("nappipoista");
+    nappimuokkaa.classList.add("nappimuokkaa");
 }
 
 function hae() {
@@ -42,12 +57,13 @@ function hae() {
     const maara = document.querySelector("#maara").value;
     console.log(hakusana);
     fetch("http://localhost:3000/api/users/" + hakusana)
-    .then(vastaus => vastaus.json())
-    .then(data => {
-        let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
-        document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            // data pitää sisällään 20 eri ruokakuvavaihtoehtoa. 
+            let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
+            document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
 
-    })
+        })
     lisääListalle(hakusana, maara);
 }
 
