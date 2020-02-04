@@ -44,8 +44,7 @@ function hae() {
     fetch("http://localhost:3000/api/users/" + hakusana)
     .then(vastaus => vastaus.json())
     .then(data => {
-        console.log(data);
-        let url = data.hits.pageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
+        let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
         document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
 
     })
