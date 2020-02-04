@@ -14,10 +14,11 @@ router.route('/:hakusana')
         //muuttaa jsoniksi?
         return fetchres.json()
       })
-      //lähettää tiedot eteenpäin "takaisin päin" localhostille
+      //lähettää kuvan localhostille selaimelle
       .then(function (data) {
         console.log(data)
         res.json(data)
+        fs.writeFile('ostokset.json', JSON.stringify(req.body), () => { console.log("Ostokset tallennettu") })
       })
   })
 router.post('/', function (req, res, next) {
