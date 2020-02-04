@@ -1,6 +1,10 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 10px;
+  background-color: thistle;
 }
 
 a {
@@ -8,23 +12,60 @@ a {
 }
 
 .yliviivaus {
-text-decoration: overline;
+  text-decoration: line-through;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 150px 150px 150px 15px;
+  grid-template-rows: 150px 150px 150px 200px;
 }
 
 header {
-
+  background-color: whitesmoke;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
 }
 
 section {
-
+  background-color: whitesmoke;
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2 ;
+  grid-row-end: 5;
+  padding: 20px;
+  border-radius: 0 0 0px 20px; 
+  overflow-y: scroll;
 }
 
-footer {
-  
+aside {
+  background-color:whitesmoke;
+  grid-column-start: 3;
+  grid-column-end: 5;
+  grid-row-start: 2 ;
+  grid-row-end: 5;
+  text-align: center;
+  padding: 10px;
+  border-radius: 0 0 20px 0px;
+}
+
+
+#tuotekuva {
+  max-width: 55%;
+  max-height: auto;
+}
+
+form {
+  margin-bottom: 50px;
+}
+
+li {
+  padding: 5px;
+}
+
+ol {
+  background-color: white;
+  border-radius: 20px;
 }
