@@ -1,3 +1,5 @@
+
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -18,13 +20,18 @@ text-decoration: overline;
 }
 
 header {
-
+background-color: blue;
 }
 
 section {
+  background-color: blueviolet;
 
 }
 
+aside {
+  background-color: cornflowerblue;
+}
+
 footer {
-  
+  background-color: cadetblue;
 }
