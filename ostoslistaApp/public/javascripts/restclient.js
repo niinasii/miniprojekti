@@ -1,5 +1,3 @@
-import { response } from "express";
-
 const hakubtn = document.querySelector("#lisaa");
 
 function yliviivaus() {
@@ -69,7 +67,8 @@ function hae() {
     fetch("http://localhost:3000/api/users/" + hakusana)
         .then(vastaus => vastaus.json())
         .then(data => {
-            // data pitää sisällään 20 eri ruokakuvavaihtoehtoa. 
+            // data pitää sisällään 20 eri ruokakuvavaihtoehtoa.
+            console.log(data); 
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
 
