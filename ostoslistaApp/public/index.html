@@ -4,10 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Kauppalista</title>
+    <link rel="stylesheet" href="./stylesheets/style.css">
 </head>
 <body>
-    <h1>Moi</h1>
-    
+    <header>
+        <h1>Kauppalista</h1>
+    </header>
+    <div class="container">
+        <div id="kuvadiv">
+            <img src="" alt="kuva-apista haettu kuva" id="tuotekuva">
+        </div>
+        <form id="hakuform">
+            <input type="text" id="hakusana">
+            <button id="lisaa" type="button">Hae</button>
+        </form>
+        <div class="output">
+            <ul id="lista">
+
+            </ul>
+        </div>
+    </div>
+
+  <script src="./javascripts/restclient.js"></script>
 </body>
 </html>
