@@ -1,8 +1,7 @@
-
-
 body {
-  padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  margin: 10px;
+  background-color: thistle;
 }
 
 a {
@@ -10,28 +9,49 @@ a {
 }
 
 .yliviivaus {
-text-decoration: overline;
+  text-decoration: overline;
 }
 
 .grid-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 150px 150px 150px 15px;
+  grid-template-rows: 150px 150px 150px 150px;
+  border-radius: 10px;
 }
 
 header {
-background-color: blue;
+  background-color: blue;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  text-align: center;
+  padding-top: 20px;
 }
 
 section {
   background-color: blueviolet;
-
+  grid-column-start: 1;
+  grid-column-end: 3;
+  grid-row-start: 2 ;
+  grid-row-end: 4;
+  text-align: center;
+  padding: 10px;
 }
 
 aside {
   background-color: cornflowerblue;
+  grid-column-start: 3;
+  grid-column-end: 5;
+  grid-row-start: 2 ;
+  grid-row-end: 4;
+  text-align: center;
+  padding: 10px;
 }
 
 footer {
   background-color: cadetblue;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 4 ;
+  grid-row-end: 4;
+  text-align: center;
 }
