@@ -48,7 +48,7 @@ function lisääListalle(hakusana, maara) {
 
     //annetaan napeille vielä id:t -otto
     nappitehty.classList.add("nappitehty");
-    nappiposta.classList.add("nappipoista");
+    nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
 }
 
