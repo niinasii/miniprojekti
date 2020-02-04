@@ -3,12 +3,14 @@ const hakubtn = document.querySelector("#lisaa");
 function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
-    ostos.classList.toggle("yliviivaus");
-    nappi.innerText = "Peruuta";
+    ostos.classList.toggle("yliviivaus"); // Lisää listaelementille luokan yliviivaus -otto
+    nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
 function poista() {
-    
+    let nappi = this;
+    let ostos = nappi.parentElement;
+    ostos.remove();
 }
 
 function lisääListalle(hakusana) {
