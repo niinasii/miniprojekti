@@ -10,3 +10,21 @@ a {
 .yliviivaus {
 text-decoration: overline;
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 150px 150px 150px 15px;
+}
+
+header {
+
+}
+
+section {
+
+}
+
+footer {
+  
+}
