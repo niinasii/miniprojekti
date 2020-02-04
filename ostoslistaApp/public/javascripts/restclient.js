@@ -1,11 +1,16 @@
 const hakubtn = document.querySelector("#lisaa");
 
 function yliviivaus() {
-
+    let nappi = this;
+    let ostos = nappi.parentElement;
+    ostos.classList.toggle("yliviivaus"); // Lisää listaelementille luokan yliviivaus -otto
+    nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
 function poista() {
-    
+    let nappi = this;
+    let ostos = nappi.parentElement;
+    ostos.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
 }
 
 function lisääListalle(hakusana) {
@@ -27,7 +32,11 @@ nappipoista.addEventListener('click', poista);
 function hae() {
     const hakusana = document.querySelector("#hakusana").value; //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
     console.log(hakusana);
+<<<<<<< HEAD
     fetch("http://localhost:3000/api/users/" + hakusana)
+=======
+    fetch("http://localhost:3000/api/users" + hakusana)
+>>>>>>> 44788e6e6cc3a16e0f7f3fac8a153ecbd2f8e78f
     .then(vastaus => vastaus.json())
     .then(data => {
         console.log(data);
