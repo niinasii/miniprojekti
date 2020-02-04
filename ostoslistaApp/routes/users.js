@@ -4,11 +4,7 @@ var router = express.Router();
 var fetch = require('node-fetch');
 
 //hakee api musesta tiedot
-<<<<<<< HEAD
 router.route('/:hakusana')
-=======
-router.route('/:id')
->>>>>>> 44788e6e6cc3a16e0f7f3fac8a153ecbd2f8e78f
   .get(function (req, res) {
     const haku = req.params.hakusana
     fetch("https://pixabay.com/api/?key=15135527-ee5c1abe508d61f100ff75126&q=" + haku + "&image_type=photo")
