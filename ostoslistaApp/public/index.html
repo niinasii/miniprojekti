@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,26 +8,31 @@
     <title>Ostoslista</title>
     <link rel="stylesheet" href="./stylesheets/style.css">
 </head>
-<body>
-    <header>
-        <h1>Ostoslista</h1>
-    </header>
-    <div class="container">
-        <div id="kuvadiv">
-            <img src="" alt="kuva-apista haettu kuva" id="tuotekuva">
-        </div>
-        <form id="hakuform">
-            <input type="text" id="hakusana" name="hakusana" placeholder="hae tuotetta (englanniksi)">
-            <input type="text" id="maara" name="maara" placeholder="määrä">
-            <button id="lisaa" type="button">Hae</button>
-        </form>
-        <div class="output">
-            <ul id="lista">
 
-            </ul>
-        </div>
+
+<body>
+    <div class="grid-container">
+        <header>
+            <h1>Ostoslista</h1>
+        </header>
+        <section>
+            <div id="kuvadiv">
+                <img src="" alt="kuva-apista haettu kuva" id="tuotekuva">
+            </div>
+            <form id="hakuform">
+                <input type="text" id="hakusana" name="hakusana" placeholder="hae tuotetta (englanniksi)">
+                <input type="text" id="maara" name="maara" placeholder="määrä">
+                <button id="lisaa" type="button">Hae</button>
+            </form>
+            <div class="output">
+                <ul id="lista">
+                </ul>
+            </div>
+        </section>
+        <footer></footer>
     </div>
 
-  <script src="./javascripts/restclient.js"></script>
+    <script src="./javascripts/restclient.js"></script>
 </body>
+
 </html>

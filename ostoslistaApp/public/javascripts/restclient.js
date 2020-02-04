@@ -41,7 +41,7 @@ function hae() {
     const hakusana = document.querySelector("#hakusana").value; //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
     const maara = document.querySelector("#maara").value;
     console.log(hakusana);
-    fetch("http://localhost:3000/api/users" + hakusana)
+    fetch("http://localhost:3000/api/users/" + hakusana)
     .then(vastaus => vastaus.json())
     .then(data => {
         console.log(data);
