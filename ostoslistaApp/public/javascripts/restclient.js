@@ -1,7 +1,10 @@
 const hakubtn = document.querySelector("#lisaa");
 
 function yliviivaus() {
-
+    let nappi = this;
+    let ostos = nappi.parentElement;
+    ostos.classList.toggle("yliviivaus");
+    nappi.innerText = "Peruuta";
 }
 
 function poista() {
@@ -27,7 +30,7 @@ nappipoista.addEventListener('click', poista);
 function hae() {
     const hakusana = document.querySelector("#hakusana").value; //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
     console.log(hakusana);
-    fetch("localhost:3000/api/kuvahaku/" + hakusana)
+    fetch("http://localhost:3000/api/users/kuvahaku/" + hakusana)
     .then(vastaus => vastaus.json())
     .then(data => {
         console.log(data);
