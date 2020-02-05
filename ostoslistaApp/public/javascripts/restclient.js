@@ -11,7 +11,7 @@ function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
     ostos.classList.toggle("yliviivaus"); // Lisää listaelementille luokan yliviivaus -otto
-    nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
+    nappi.innerText === "Peruuta" ? nappi.innerText = "Tehty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
 function poista() {
