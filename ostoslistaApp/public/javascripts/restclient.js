@@ -1,5 +1,12 @@
 const hakubtn = document.querySelector("#lisaa");
 
+class Tuote{
+    constructor(hakusana, maara) {
+        this.hakusana = hakusana;
+        this.maara = maara;
+    }
+}
+
 function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
@@ -25,14 +32,40 @@ function poista() {
         },
         body: JSON.stringify(ostos)
     })
-    .then(response => response.json())
-    .then(data => console.log("poisto onnistunut, vastaus: " + data));
+        .then(response => response.json())
+        .then(data => console.log("poisto onnistunut, vastaus: " + data));
 
     listaelementti.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
 }
 
 function muokkaa() {
     alert("ei vielä implementoitu. sori.");
+}
+
+function lähetys(tallennus) {
+    fetch("http://localhost:3000/api/users/",{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(tallennus)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+            lisääListalle(data[i].hakusana, data[i].maara);
+        }
+    })
+}
+
+//hakee palvelimelle tallenetun json muotoisen ostoslistan
+function listaus() {
+    fetch("http://localhost:3000/api/users/")
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                lisääListalle(data[i].hakusana, data[i].maara);
+            }
+        })
 }
 
 function lisääListalle(hakusana, maara) {
@@ -58,6 +91,10 @@ function lisääListalle(hakusana, maara) {
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
+
+    //lähetetään jsoniin
+    let tallennus = new Tuote(hakusana, maara);
+    lähetys(tallennus);
 }
 
 function hae() {
@@ -68,7 +105,7 @@ function hae() {
         .then(vastaus => vastaus.json())
         .then(data => {
             // data pitää sisällään 20 eri ruokakuvavaihtoehtoa.
-            console.log(data); 
+            console.log(data);
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
 
@@ -77,3 +114,4 @@ function hae() {
 }
 
 hakubtn.addEventListener("click", hae);
+window.addEventListener("DOMContentLoaded", listaus);
