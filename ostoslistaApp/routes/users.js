@@ -50,7 +50,6 @@ router.route('/:hakusana').get(function (req, res) {
       res.json(data)
     })
 }) //lisää ostokset arrayhin palvelimelle ostokset.json 
+
   
-
-
 module.exports = router;
