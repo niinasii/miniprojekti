@@ -36,10 +36,22 @@ router.route('/').get(function (req, res, next) {
   }
   res.json("{'msg': 'Ostoslistalta ei löydy tätä tuotetta!'}");
 })
-  .put(function (req, res, next) { // ensimmäinen versio PUT:sta, en tiedä toimiiko : D - jaska 
-    let ostosind = ostoslista.findIndex(o => o.hakusana == req.params.hakusana);
-    ostoslista[ostosind] = req.body
-    res.json({ message: ostosind + " updated" });
+  .put(function (req, res, next) { // muuttaa lukumäärää 
+    console.log(req)
+    for (var o in ostoslista) {
+      console.log(req.body);
+      if (ostoslista[o].hakusana == req.body.hakusana) {
+        ostoslista.splice(o, 1); //poistaa tuotteen ja määrän
+        let tuote = req.body;
+        ostoslista.push(tuote); // lisää tuotteen uudella määrällä
+        console.log(ostoslista)
+        res.json("{msg: 'ostoksen määrä muutettu'}");
+        fs.writeFile("ostokset.json", JSON.stringify(ostoslista), () => { console.log("Ostosten määrä muutettu") });
+        return;
+      }
+      console.log(ostoslista)
+    }
+    res.json("{'msg': 'Ostoslistalta ei löydy tätä tuotetta!'}");
   })
 //hakee api pixabaysta kuvan
 router.route('/:hakusana').get(function (req, res) {
