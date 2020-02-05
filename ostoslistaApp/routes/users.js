@@ -8,7 +8,7 @@ ostoslista = []
 router.route('/').get(function (req, res, next) {
   
    // tämän pitäisi palauttaa olemassa olevan ostoslistan käyttäjälle selaimen latautuessa - jaska
-  res.json("../ostokset.json");
+  res.json(ostokset.json);
 
 }).post(function (req, res, next) {
   let tuote = req.body
