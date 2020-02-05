@@ -1,6 +1,6 @@
 const hakubtn = document.querySelector("#lisaa");
 
-class Tuote{
+class Tuote {
     constructor(hakusana, maara) {
         this.hakusana = hakusana;
         this.maara = maara;
@@ -23,7 +23,6 @@ function poista() {
     let ostos = listateksti.match(regex);
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length - 1);
-    console.log(ostos);
 
     // luodaan DELETE -fetch-pyyntö. 
     fetch("http://localhost:3000/api/users/", { //pitääkö olla await???? -otto
@@ -40,22 +39,60 @@ function poista() {
 }
 
 function muokkaa() {
-    alert("ei vielä implementoitu. sori.");
-}
+    //haetaan tuotteen nimi ja tallennetaan se muuttujaan "ostos"
+    let nappi = this;
+    let listaelementti = nappi.parentElement;
+    let listateksti = listaelementti.innerHTML;
+    let regex = /^[A-Z ]+/i;
+    let ostos = listateksti.match(regex);
+    ostos = ostos[0];
+    ostos = ostos.substring(0, ostos.length - 1);
 
+    //luodaan muokkauskenttä
+    let muokkaakentta = document.createElement("input");
+    muokkaakentta.setAttribute("type", "text");
+    muokkaakentta.setAttribute("id", "muokkaakentta");
+
+    listaelementti.appendChild(muokkaakentta);
+
+    //luodaan muokkauskentän tallennuspainike
+    let tallennusnappi = document.createElement("button");
+    tallennusnappi.setAttribute("type", "button");
+    tallennusnappi.setAttribute("id", "tallennusnappi");
+    tallennusnappi.innerText = "Päivitä";
+
+    listaelementti.appendChild(tallennusnappi);
+
+    tallennusnappi.addEventListener("click", paivita);
+
+
+    function paivita(){    //kirjoitetaan put-pyyntö
+        let uusimaara = muokkaakentta.value;
+        console.log(uusimaara);
+        let paivitys = {ostos, uusimaara};
+        fetch("http://localhost:3000/api/users/", {
+            method: "PUT",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(paivitys)
+        })
+            .then(response => response.json())
+    }
+}
 function lähetys(tallennus) {
-    fetch("http://localhost:3000/api/users/",{
+    fetch("http://localhost:3000/api/users/", {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(tallennus)
     })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data);
-        for (let i = 0; i < data.length; i++) {
-            lisääListalle(data[i].hakusana, data[i].maara);
-        }
-    })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            for (let i = 0; i < data.length; i++) {
+                lisääListalle(data[i].hakusana, data[i].maara);
+            }
+        })
 }
 
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
