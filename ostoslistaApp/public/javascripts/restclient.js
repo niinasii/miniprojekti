@@ -1,4 +1,7 @@
 const hakubtn = document.querySelector("#lisaa");
+const tallennusbtn = document.querySelector("#tallennus");
+const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
+const maara = document.querySelector("#maara");
 
 class Tuote {
     constructor(hakusana, maara) {
@@ -19,18 +22,21 @@ function poista() {
     let nappi = this;
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
-    let regex = /^[A-Z ]+/i;
+    let regex = /^[A-Z]+/i;
     let ostos = listateksti.match(regex);
     ostos = ostos[0];
-    ostos = ostos.substring(0, ostos.length - 1);
+    ostos = ostos.substring(0, ostos.length);
+
+    let ostosolio = new Tuote(ostos, 0);
 
     // luodaan DELETE -fetch-pyyntö. 
-    fetch("http://localhost:3000/api/users/", { //pitääkö olla await???? -otto
+    fetch("http://localhost:3000/api/users/", {
+         //pitääkö olla await???? -otto
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(ostos)
+        body: JSON.stringify(ostosolio)
     })
         .then(response => response.json())
         .then(data => console.log("poisto onnistunut, vastaus: " + data));
@@ -85,11 +91,14 @@ function muokkaa() {
         console.log(ostos);
     }
 }
-function lähetys(tallennus) {
-    fetch("http://localhost:3000/api/users/", {
+function lähetys() {
+
+    let ostos = new Tuote(hakusana.value, maara.value);
+
+    fetch("http://localhost:3000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tallennus)
+        body: JSON.stringify(ostos)
     })
         .then((response) => response.json())
         .then((data) => {
@@ -141,10 +150,7 @@ function lisääListalle(hakusana, maara) {
 }
 
 function hae() {
-    const hakusana = document.querySelector("#hakusana").value; //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
-    const maara = document.querySelector("#maara").value;
-
-    fetch("http://localhost:3000/api/users/" + hakusana)
+    fetch("http://localhost:3000/api/users/" + hakusana.value)
         .then(vastaus => vastaus.json())
         .then(data => {
             // data pitää sisällään 20 eri ruokakuvavaihtoehtoa.
@@ -152,8 +158,9 @@ function hae() {
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
         })
-    // lisääListalle(hakusana, maara);
+    lisääListalle(hakusana.value, maara.value);
 }
 
 hakubtn.addEventListener("click", hae);
+tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
