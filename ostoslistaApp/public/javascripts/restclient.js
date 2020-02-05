@@ -74,8 +74,7 @@ function muokkaa() {
 
     function paivita() {    //kirjoitetaan put-pyyntö
         let uusimaara = muokkaakentta.value;
-        console.log(uusimaara);
-        let paivitys = { ostos, uusimaara };
+        let paivitys = new Tuote(ostos, uusimaara);
         fetch("http://localhost:3000/api/users/", {
             method: "PUT",
             headers: {
@@ -87,8 +86,6 @@ function muokkaa() {
 
         listaelementti.remove();
         lisääListalle(ostos, uusimaara);
-
-        console.log(ostos);
     }
 }
 function lähetys() {
@@ -102,7 +99,6 @@ function lähetys() {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             for (let i = 0; i < data.length; i++) {
                 lisääListalle(data[i].hakusana, data[i].maara);
             }
@@ -154,7 +150,6 @@ function hae() {
         .then(vastaus => vastaus.json())
         .then(data => {
             // data pitää sisällään 20 eri ruokakuvavaihtoehtoa.
-            console.log(data);
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
         })
