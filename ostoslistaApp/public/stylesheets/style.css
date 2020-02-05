@@ -53,8 +53,8 @@ aside {
 
 
 #tuotekuva {
-  max-width: 55%;
-  max-height: auto;
+  max-width: 500px;
+  max-height: 450px;
 }
 
 form {
