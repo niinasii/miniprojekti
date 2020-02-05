@@ -6,9 +6,11 @@ var fs = require('fs');
 ostoslista = []
 
 router.route('/').get(function (req, res, next) {
-  
-   // tämän pitäisi palauttaa olemassa olevan ostoslistan käyttäjälle selaimen latautuessa - jaska
-  res.json("../ostokset.json");
+  let informaatiot = fs.readFileSync("../ostokset.json");
+  console.log(JSON.parse(informaatiot));
+
+  //  tämän pitäisi palauttaa olemassa olevan ostoslistan käyttäjälle selaimen latautuessa - jaska
+  res.send(informaatiot);
 
 }).post(function (req, res, next) {
   let tuote = req.body

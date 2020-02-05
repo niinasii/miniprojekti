@@ -137,7 +137,7 @@ function lisääListalle(hakusana, maara) {
 
     //lähetetään jsoniin
     let tallennus = new Tuote(hakusana, maara);
-    lähetys(tallennus);
+    // lähetys(tallennus);
 }
 
 function hae() {
