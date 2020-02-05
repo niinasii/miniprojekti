@@ -16,6 +16,7 @@ function poista() {
     let ostos = listateksti.match(regex);
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length - 1);
+    console.log(ostos);
 
     // luodaan DELETE -fetch-pyyntö. 
     fetch("http://localhost:3000/api/users/", { //pitääkö olla await???? -otto
@@ -71,7 +72,6 @@ function hae() {
             console.log(data); 
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
-
         })
     lisääListalle(hakusana, maara);
 }
