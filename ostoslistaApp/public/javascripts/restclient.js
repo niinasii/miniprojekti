@@ -14,7 +14,7 @@ function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
     ostos.classList.toggle("yliviivaus"); // Lisää listaelementille luokan yliviivaus -otto
-    nappi.innerText === "Peruuta" ? nappi.innerText = "Tehty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
+    nappi.innerText === "Peruuta" ? nappi.innerText = "Kerätty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
 function poista() {
@@ -121,11 +121,11 @@ function lisääListalle(hakusana, maara) {
     let ostos = document.createElement('li'); //luodaan uusi lista-elementti
     ostos.innerHTML = `${hakusana} x ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
     let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
-    nappitehty.innerText = "Tehty"; //napin tekstiksi Tehty
+    nappitehty.innerText = "Kerätty"; //napin tekstiksi Tehty
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
     nappipoista.innerText = "Poista"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
-    nappimuokkaa.innerText = "Muokkaa"
+    nappimuokkaa.innerText = "Muokkaa määrää"
     ostos.appendChild(nappitehty); //lisätään ostos-html elementiin nappitehty
     ostos.appendChild(nappipoista); //listään ostos-html elementiin nappipoista
     ostos.appendChild(nappimuokkaa); //lisätään ostos-elementille nappi muokkaa
