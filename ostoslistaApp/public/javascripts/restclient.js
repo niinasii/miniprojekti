@@ -43,10 +43,10 @@ function muokkaa() {
     let nappi = this;
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
-    let regex = /^[A-Z ]+/i;
-    let ostos = listateksti.match(regex);
+    let ostosregex = /^[A-Z]+/i;
+    let ostos = listateksti.match(ostosregex);
     ostos = ostos[0];
-    ostos = ostos.substring(0, ostos.length - 1);
+    ostos = ostos.substring(0, ostos.length);
 
     //luodaan muokkauskenttä
     let muokkaakentta = document.createElement("input");
@@ -66,10 +66,10 @@ function muokkaa() {
     tallennusnappi.addEventListener("click", paivita);
 
 
-    function paivita(){    //kirjoitetaan put-pyyntö
+    function paivita() {    //kirjoitetaan put-pyyntö
         let uusimaara = muokkaakentta.value;
         console.log(uusimaara);
-        let paivitys = {ostos, uusimaara};
+        let paivitys = { ostos, uusimaara };
         fetch("http://localhost:3000/api/users/", {
             method: "PUT",
             headers: {
@@ -78,6 +78,11 @@ function muokkaa() {
             body: JSON.stringify(paivitys)
         })
             .then(response => response.json())
+
+        listaelementti.remove();
+        lisääListalle(ostos, uusimaara);
+
+        console.log(ostos);
     }
 }
 function lähetys(tallennus) {
