@@ -22,11 +22,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-fs.readFile("ostokset.json", (err, data) => {
-  console.log("ostokset luettu");
-  ostoslista = JSON.parse(data);
-  console.dir(ostoslista);
-}); 
+// fs.readFile("ostokset.json", (err, data) => {
+//   console.log("ostokset luettu");
+//   ostoslista = JSON.parse(data);
+//   console.dir(ostoslista);
+// }); 
 
 app.use('/', indexRouter);
 app.use('/api/users', usersRouter);

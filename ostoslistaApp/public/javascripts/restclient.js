@@ -102,7 +102,7 @@ function lähetys(tallennus) {
 
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
-    fetch("http://localhost:3000/api/users/")
+    fetch("http://localhost:3000/api/users")
         .then(vastaus => vastaus.json())
         .then(data => {
             for (let i = 0; i < data.length; i++) {
@@ -152,7 +152,7 @@ function hae() {
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
         })
-    lisääListalle(hakusana, maara);
+    // lisääListalle(hakusana, maara);
 }
 
 hakubtn.addEventListener("click", hae);
