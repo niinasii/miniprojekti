@@ -1,5 +1,12 @@
 const hakubtn = document.querySelector("#lisaa");
 
+class Tuote{
+    constructor(hakusana, maara) {
+        this.hakusana = hakusana;
+        this.maara = maara;
+    }
+}
+
 function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
@@ -35,14 +42,28 @@ function muokkaa() {
     alert("ei vielä implementoitu. sori.");
 }
 
-//hakee palvelimelle tallenetun json muotoisen ostoslistan
+function lähetys(tallennus) {
+    fetch("http://localhost:3000/api/users/",{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(tallennus)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+            lisääListalle(data[i].hakusana, data[i].maara);
+        }
+    })
+}
 
+//hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
     fetch("http://localhost:3000/api/users/")
         .then(vastaus => vastaus.json())
         .then(data => {
-            for (let i = 0; i > data.length; i++) {
-                lisääListalle(data[i]);
+            for (let i = 0; i < data.length; i++) {
+                lisääListalle(data[i].hakusana, data[i].maara);
             }
         })
 }
@@ -70,6 +91,10 @@ function lisääListalle(hakusana, maara) {
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
+
+    //lähetetään jsoniin
+    let tallennus = new Tuote(hakusana, maara);
+    lähetys(tallennus);
 }
 
 function hae() {
