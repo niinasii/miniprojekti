@@ -7,6 +7,7 @@ ostoslista = []
 
 router.route('/').get(function (req, res, next) { // tämän pitäisi palauttaa olemassa olevan ostoslistan käyttäjälle selaimen latautuessa - jaska
   res.json(ostokset.json);
+
 })
 //hakee api pixabaysta kuvan
 router.route('/:hakusana').get(function (req, res) {
@@ -29,6 +30,7 @@ router.route('/:hakusana').get(function (req, res) {
     console.log(ostoslista)
     fs.writeFile('ostokset.json', JSON.stringify(ostoslista), () => { console.log("Ostokset tallennettu") })
 
+
   }).delete('/', function (req, res) {
     //poistaa ostoksen
     for (var o in ostokset) {
@@ -47,5 +49,6 @@ router.route('/:hakusana').get(function (req, res) {
     ostoslista[ostosind] = req.body
     res.json({ message: ostosind + " updated" });
   })
+
 
 module.exports = router;
