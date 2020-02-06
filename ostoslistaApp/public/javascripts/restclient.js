@@ -3,8 +3,6 @@ const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
-
-
 class Tuote {
     constructor(hakusana, maara) {
         this.hakusana = hakusana;
