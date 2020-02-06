@@ -82,5 +82,4 @@ router.route('/:hakusana').get(function (req, res) {
         })
 }) //lisää ostokset arrayhin palvelimelle ostokset.json 
 
-
 module.exports = router;
