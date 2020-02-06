@@ -93,6 +93,7 @@ function muokkaa() {
     }
 }
 function lähetys() {
+    ravinteetdiv.innerHTML = ""; // tyhjentää ravinnelistan painettaessa tallenna listalle- nappia
 
     let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
