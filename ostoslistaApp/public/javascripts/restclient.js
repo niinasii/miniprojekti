@@ -124,8 +124,8 @@ function lähetys() {
                 lisääListalle(data[i].hakusana, data[i].maara);
             }
         })
-        listaus();
-        haeKuva();
+    listaus();
+    haeKuva();
 }
 
 function loytyykoJoListalta(ostos) {
@@ -136,8 +136,8 @@ function loytyykoJoListalta(ostos) {
         let item = liArr[i];
         let regex = /^[A-Z]+/i;
         let listaTuote = item.innerText.match(regex)[0];
-        
-        if (ostos === listaTuote){
+
+        if (ostos === listaTuote) {
             throw "Tuote löytyy jo listalta. Poista tai muokkaa listalta löytyvää tuotetta.";
         }
     }
@@ -146,16 +146,16 @@ function loytyykoJoListalta(ostos) {
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
 
-    
 
-    while(document.querySelector("#lista").firstChild){
+
+    while (document.querySelector("#lista").firstChild) {
         document.querySelector("#lista").removeChild(document.querySelector("#lista").firstChild);
     }
     fetch("http://localhost:3000/api/users")
         .then(vastaus => vastaus.json())
         .then(data => {
             for (let i = 0; i < data.length; i++) {
-                let ostos = new Tuote (data[i].hakusana, data[i].maara, data[i].yksikko)
+                let ostos = new Tuote(data[i].hakusana, data[i].maara, data[i].yksikko)
                 lisääListalle(ostos);
             }
         })
@@ -175,6 +175,7 @@ function lisääListalle(ostos) {
     ostosLi.appendChild(nappipoista); //listään ostosLi-html elementiin nappipoista
     ostosLi.appendChild(nappimuokkaa); //lisätään ostosLi-elementille nappi muokkaa
     lista.appendChild(ostosLi); //julkaistaan koko höskä
+    ostosLi.addEventListener("click", haeKuvaListasta);
 
     nappitehty.addEventListener('click', yliviivaus); //lisätään napille toiminto "yliviivaus"
     nappipoista.addEventListener('click', poista); // lisätään napille toiminto "poista"
@@ -197,6 +198,21 @@ function haeKuva() {
     // lisääListalle(hakusana.value, maara.value);
 }
 
+function haeKuvaListasta(event) {
+    //kaivetaan esiin listatuotteen nimi
+    let regex = /^[A-Z]+/i;
+    let listaTuote = event.path[0].innerText.match(regex)[0];
+
+    //haetaan kuva tuotteen nimellä
+    fetch("http://localhost:3000/api/users/" + listaTuote)
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            // data pitää sisällään 20 eri ruokakuvavaihtoehtoa.
+            let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
+            document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
+        })
+}
+
 function haeRavinteet() {
 
     fetch("http://localhost:3000/api/ravinteet/" + hakusana.value)
@@ -205,9 +221,10 @@ function haeRavinteet() {
             console.log(data)
             for (let d of data) {
                 ravinteetdiv.innerHTML = `Tuote on ${d.name}`
-                
-        }
-})}
+
+            }
+        })
+}
 
 
 tallennusbtn.addEventListener("click", lähetys);
