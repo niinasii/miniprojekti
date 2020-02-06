@@ -125,6 +125,7 @@ function lähetys() {
             }
         })
         listaus();
+        haeKuva();
 }
 
 function loytyykoJoListalta(ostos) {
@@ -185,7 +186,7 @@ function lisääListalle(ostos) {
     nappimuokkaa.classList.add("nappimuokkaa");
 }
 
-function hae() {
+function haeKuva() {
     fetch("http://localhost:3000/api/users/" + hakusana.value)
         .then(vastaus => vastaus.json())
         .then(data => {
@@ -209,7 +210,6 @@ function haeRavinteet() {
 })}
 
 
-hakubtn.addEventListener("click", hae);
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
 ravinteetbtn.addEventListener("click", haeRavinteet);
