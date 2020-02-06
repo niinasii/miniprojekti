@@ -1,7 +1,9 @@
 const hakubtn = document.querySelector("#lisaa");
 const tallennusbtn = document.querySelector("#tallennus");
+const ravinteetbtn = document.querySelector("#ravinteet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
+
 
 class Tuote {
     constructor(hakusana, maara) {
@@ -156,6 +158,20 @@ function hae() {
     // lisääListalle(hakusana.value, maara.value);
 }
 
+function haeRavinteet() {
+
+    fetch("http://localhost:3000/api/ravinteet/" + hakusana.value)
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            console.log(data)
+            for (let d of data) {
+                ravinteetdiv.innerHTML = `Tuote on ${d.name}`
+                
+        }
+})}
+
+
 hakubtn.addEventListener("click", hae);
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
+ravinteetbtn.addEventListener("click", haeRavinteet);
