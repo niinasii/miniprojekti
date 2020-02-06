@@ -105,8 +105,8 @@ function lähetys() {
                 lisääListalle(data[i].hakusana, data[i].maara);
             }
         })
+    lisääListalle(hakusana.value, maara.value);
 }
-
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
     fetch("http://localhost:3000/api/users")
@@ -155,7 +155,7 @@ function hae() {
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
         })
-    lisääListalle(hakusana.value, maara.value);
+    // lisääListalle(hakusana.value, maara.value);
 }
 
 function haeRavinteet() {
