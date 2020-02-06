@@ -4,7 +4,18 @@
 
 @font-face {
   font-family: otsikko;
-  src: url(../fonts/ALDITHRegular.ttf)
+  src: url(../fonts/AldithRegular.ttf)
+}
+
+@font-face {
+  font-family: kursivoitu;
+  src: url(../fonts/Aldithtalic.ttf)
+}
+
+li:hover {
+  cursor: pointer;
+  background-color: pink;
+  border
 }
 
 h1 {
@@ -12,6 +23,36 @@ h1 {
   font-size: 500%;
   font-family: otsikko;
 }
+
+h2 {
+  color: darkorchid;
+  font-family: kursivoitu;
+}
+
+/*ANIMOINTI*/
+
+@keyframes otsikko {
+  0% {
+    top: -200px
+  }
+  25% {
+    top: 0px
+  }
+  60% {
+    top: -20px
+  }
+  100% {
+    top: 0px
+  }
+}
+
+#animoitu {
+  animation-name: otsikko;
+  position: relative;
+  animation-duration: 4s;
+}
+
+/*LOMAKE */
 
 button {
   background-color: white;

@@ -13,6 +13,36 @@ h1 {
   font-size: 400%;
 }
 
+h2 {
+  color: darkorchid;
+  font-family: kursivoitu;
+}
+
+/*ANIMOINTI*/
+
+@keyframes otsikko {
+  0% {
+    top: -200px
+  }
+  25% {
+    top: 0px
+  }
+  60% {
+    top: -20px
+  }
+  100% {
+    top: 0px
+  }
+}
+
+#animoitu {
+  animation-name: otsikko;
+  position: relative;
+  animation-duration: 4s;
+}
+
+/*LOMAKE*/
+
 button {
   background-color: white;
   border-radius: 5px;
