@@ -5,7 +5,6 @@ const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän
 const maara = document.querySelector("#maara");
 const yksikko = document.querySelector("#yksikko");
 
-
 class Tuote {
 
     constructor(hakusana, maara, yksikko) {

@@ -1,0 +1,112 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+@font-face {
+  font-family: otsikko;
+  src: url(../fonts/ALDITHRegular.ttf)
+}
+
+h1 {
+  color: darkorchid;
+  font-family: otsikko;
+  font-size: 400%;
+}
+
+button {
+  background-color: white;
+  border-radius: 5px;
+  border-width: 1px;
+  border-color: orchid;
+  box-shadow: darkorchid 1px 1px 3px;
+  padding: 2px;
+  margin: 2px;
+}
+
+input {
+  border-color: orchid;
+  border-width: 1px;
+  padding: 2px;
+  margin: 2px;
+}
+
+hr {
+  border: darkorchid 1px solid;
+}
+
+body {
+  margin: 10px;
+  background-color: thistle;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.yliviivaus {
+  text-decoration: line-through;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-template-rows: 150px 100px 100px 600px;
+}
+
+header {
+  background-color: whitesmoke;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  padding: 20px;
+  border-radius: 20px 20px 0 0;
+  text-align: center;
+}
+
+section {
+  background-color: whitesmoke;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 4;
+  grid-row-end: 5;
+  padding: 20px;
+  border-radius: 0px 0px 20px 20px;
+  overflow-y: auto;
+}
+
+aside {
+  background-color: whitesmoke;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 2;
+  grid-row-end: 4;
+  border-radius: 0px 0px 0px 0px;
+  text-align: center;
+  padding: 10px;
+}
+
+#kuvadiv {
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 10px;
+}
+
+#tuotekuva {
+  max-width: 200px;
+  max-height: 150px;
+  width: 100%;
+  height: 100%;
+}
+
+form {
+  margin-bottom: 30px;
+}
+
+li {
+  padding: 5px;
+}
+
+ol {
+  background-color: white;
+  border-radius: 20px;
+}
