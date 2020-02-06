@@ -36,14 +36,27 @@
                     <option value="prk">purkkia</option>
                 </select><br>
                 <button id="tallennus" type="button">Tallenna listalle</button>
-                <button id="listatyhjaksibtn" type="button">Tyhjennä lista</button>
-                <button id="ravinteet" type="button">Hae ravintosisältö</button>
+              <br>
+              <button id="ravinteet" type="button">Hae ravintosisältö</button>
+              <br>
+              <button id="listatyhjaksibtn" type="button">Tyhjennä lista</button>
+              <br>
+              <button id="aanet" type="button">Kuuntele</button>
+
             </form>
             <hr>
             <div class="output">
                 <ol id="lista">
                 </ol>
+          </div>
+            <br>
+            <div id="otsikko"></div>
+            <br>
+            <div id="ravinteetdiv"> 
+                <div id="ravinteetkuva"></div>
             </div>
+            <audio autoplay id="aani" src="http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src="></audio>
+        </section>
         </main>
         
         <aside>
@@ -51,13 +64,8 @@
                 <img src="images/placeholder.png" alt="Haetun tuotteen kuva" id="tuotekuva">
             </div>
         </aside>
-
-        <section>
-            <div id="otsikko"></div>
-            <div id="ravinteetdiv"></div>
-        </section>
-
     </div>
     <script src="./javascripts/restclient.js"></script>
+    
 </body>
 </html>

@@ -1,6 +1,7 @@
 const hakubtn = document.querySelector("#lisaa");
 const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
+const aanetbtn = document.querySelector("#aanet");
 const listatyhjaksibtn = document.querySelector("#listatyhjaksibtn");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
@@ -112,6 +113,7 @@ function muokkaa() {
     }
 }
 function lähetys() {
+    ravinteetdiv.innerHTML = ""; // tyhjentää ravinnelistan painettaessa tallenna listalle- nappia
 
     let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
@@ -183,6 +185,8 @@ function listaus() {
 }
 
 function lisääListalle(ostos) {
+
+    //luodaan listaitemille napit ja niiden toiminnallisuudet
     let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
     let ostosLi = document.createElement('li'); //luodaan uusi lista-elementti
     ostosLi.innerHTML = `${ostos.hakusana} x ${ostos.maara} ${ostos.yksikko} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
@@ -191,21 +195,26 @@ function lisääListalle(ostos) {
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
     nappipoista.innerText = "Poista"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
-    nappimuokkaa.innerText = "Muokkaa määrää"
-    ostosLi.appendChild(nappitehty); //lisätään ostosLi-html elementiin nappitehty
+    nappimuokkaa.innerText = "Muokkaa määrää";
+    let nappiravinto = document.createElement("button");
+    nappiravinto.innerText = "Näytä ravintosisältö";
+    ostosLi.appendChild(nappiravinto); //lisätään itemille ravintosisältöpainike
     ostosLi.appendChild(nappipoista); //listään ostosLi-html elementiin nappipoista
     ostosLi.appendChild(nappimuokkaa); //lisätään ostosLi-elementille nappi muokkaa
+    ostosLi.appendChild(nappitehty); //lisätään ostosLi-html elementiin nappitehty
     lista.appendChild(ostosLi); //julkaistaan koko höskä
     ostosLi.addEventListener("click", haeKuvaListasta);
 
     nappitehty.addEventListener('click', yliviivaus); //lisätään napille toiminto "yliviivaus"
     nappipoista.addEventListener('click', poista); // lisätään napille toiminto "poista"
     nappimuokkaa.addEventListener("click", muokkaa);
+    nappiravinto.addEventListener("click", haeRavinteetListasta);
 
     //annetaan napeille vielä id:t -otto
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
+    nappiravinto.classList.add("nappimuokkaa");
 }
 
 function haeKuva() {
@@ -255,12 +264,62 @@ function haeRavinteet() {
             for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
                 //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
                 const uusili = document.createElement('ul');
-                ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
-                ravinteetdiv.appendChild(uusili);
+                uusili.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
+                document.querySelector("#ravinteetdiv").appendChild(uusili);
             }
         })
 }
 
+
+function haeRavinteetListasta() {
+    let nappi = this;
+    this.setAttribute("disabled", "true")
+    let listaelementti = nappi.parentElement;
+    let listateksti = listaelementti.innerHTML;
+    let ostosregex = /^[A-ZÅÄÖ]+/i;
+    let ostos = listateksti.match(ostosregex);
+    ostos = ostos[0];
+    ostos = ostos.substring(0, ostos.length);
+
+    fetch("http://localhost:3000/api/ravinteet/" + ostos)
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            JSON.stringify(data)
+            console.log(data)
+            otsikko.innerHTML = "Ravintosisältö / 100g"
+      
+            for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
+                //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
+                const uusili = document.createElement('ul');
+                ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
+                document.querySelector("#ravinteetdiv").appendChild(uusili);
+            }
+        })
+    }
+function haeAanet() {
+
+    let taulukko = []
+
+    fetch("http://localhost:3000/api/aanet")
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                // taulukko.push(`${d.hakusana}`)
+                let rimpsu = data[i].hakusana
+                taulukko.push(rimpsu)
+            // (let i = 0; i < data.length; i++) {
+            //     let ostos = new Tuote(data[i].hakusana, data[i].maara, data[i].yksikko)
+            // JSON.parse(rimpsu)
+            console.log(rimpsu)
+
+    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src="
+        // let ostos = ('ostokset.json')
+        document.getElementById("aani").src = osoite + taulukko
+        console.log(osoite)
+    } })
+    
+
+}
 
 function tyhjennaLista() {
     let lista = document.querySelector("#lista");
@@ -286,6 +345,7 @@ function tyhjennaLista() {
             .then(data => console.log("poisto onnistunut, vastaus: " + data));
 
         listaelementti.remove();
+        ravinteetdiv.innerHTML = "";
     }
 }
 
@@ -296,3 +356,4 @@ tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
 ravinteetbtn.addEventListener("click", haeRavinteet);
 listatyhjaksibtn.addEventListener("click", tyhjennaLista);
+aanetbtn.addEventListener("click", haeAanet);
