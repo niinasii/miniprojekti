@@ -3,13 +3,15 @@ const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
+const yksikko = document.querySelector("#yksikko");
 
 
 class Tuote {
 
-    constructor(hakusana, maara) {
+    constructor(hakusana, maara, yksikko) {
         this.hakusana = hakusana;
         this.maara = maara;
+        this.yksikko = yksikko;
     }
 }
 
@@ -93,7 +95,7 @@ function muokkaa() {
 }
 function lähetys() {
 
-    let ostos = new Tuote(hakusana.value, maara.value);
+    let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
     //tarkistetaan ettei määrä ole vähemmän kuin 1 tai muuta kuin nro
     if (ostos.maara < 1 || isNaN(parseInt(ostos.maara))) {
@@ -142,6 +144,9 @@ function loytyykoJoListalta(ostos) {
 
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
+
+    
+
     while(document.querySelector("#lista").firstChild){
         document.querySelector("#lista").removeChild(document.querySelector("#lista").firstChild);
     }
@@ -149,25 +154,26 @@ function listaus() {
         .then(vastaus => vastaus.json())
         .then(data => {
             for (let i = 0; i < data.length; i++) {
-                lisääListalle(data[i].hakusana, data[i].maara);
+                let ostos = new Tuote (data[i].hakusana, data[i].maara, data[i].yksikko)
+                lisääListalle(ostos);
             }
         })
 }
 
-function lisääListalle(hakusana, maara) {
+function lisääListalle(ostos) {
     let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
-    let ostos = document.createElement('li'); //luodaan uusi lista-elementti
-    ostos.innerHTML = `${hakusana} x ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
+    let ostosLi = document.createElement('li'); //luodaan uusi lista-elementti
+    ostosLi.innerHTML = `${ostos.hakusana} x ${ostos.maara} ${ostos.yksikko} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
     let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
     nappitehty.innerText = "Kerätty"; //napin tekstiksi Tehty
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
     nappipoista.innerText = "Poista"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
     nappimuokkaa.innerText = "Muokkaa määrää"
-    ostos.appendChild(nappitehty); //lisätään ostos-html elementiin nappitehty
-    ostos.appendChild(nappipoista); //listään ostos-html elementiin nappipoista
-    ostos.appendChild(nappimuokkaa); //lisätään ostos-elementille nappi muokkaa
-    lista.appendChild(ostos); //julkaistaan koko höskä
+    ostosLi.appendChild(nappitehty); //lisätään ostosLi-html elementiin nappitehty
+    ostosLi.appendChild(nappipoista); //listään ostosLi-html elementiin nappipoista
+    ostosLi.appendChild(nappimuokkaa); //lisätään ostosLi-elementille nappi muokkaa
+    lista.appendChild(ostosLi); //julkaistaan koko höskä
 
     nappitehty.addEventListener('click', yliviivaus); //lisätään napille toiminto "yliviivaus"
     nappipoista.addEventListener('click', poista); // lisätään napille toiminto "poista"
