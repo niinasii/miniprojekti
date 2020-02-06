@@ -1,6 +1,7 @@
 const hakubtn = document.querySelector("#lisaa");
 const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
+const listatyhjaksibtn = document.querySelector("#listatyhjaksibtn");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
 const yksikko = document.querySelector("#yksikko");
@@ -97,9 +98,9 @@ function lähetys() {
     let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
     //tarkistetaan ettei tuotteen nimi ala numerolla
-    if (!ostos.hakusana.charAt(0).match(/[a-z]/i)){
+    if (!ostos.hakusana.charAt(0).match(/[a-z]/i)) {
         alert("Tuotenimi ei voi alkaa numerolla.");
-        return; 
+        return;
     }
 
     //tarkistetaan ettei määrä ole vähemmän kuin 1 tai muuta kuin nro
@@ -150,9 +151,6 @@ function loytyykoJoListalta(ostos) {
 
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
-
-
-
     while (document.querySelector("#lista").firstChild) {
         document.querySelector("#lista").removeChild(document.querySelector("#lista").firstChild);
     }
@@ -231,7 +229,35 @@ function haeRavinteet() {
         })
 }
 
+function tyhjennaLista() {
+    let lista = document.querySelector("#lista");
+    while (lista.firstChild) {
+        let listaelementti = lista.firstChild;
+        let listateksti = listaelementti.innerHTML;
+        let regex = /^[A-Z]+/i;
+        let ostos = listateksti.match(regex);
+        ostos = ostos[0];
+        ostos = ostos.substring(0, ostos.length);
+
+        let ostosolio = new Tuote(ostos, 0);
+
+        // luodaan DELETE -fetch-pyyntö. 
+        fetch("http://localhost:3000/api/users/", {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ostosolio)
+        })
+            .then(response => response.json())
+            .then(data => console.log("poisto onnistunut, vastaus: " + data));
+
+        listaelementti.remove();
+    }
+}
+
 
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
 ravinteetbtn.addEventListener("click", haeRavinteet);
+listatyhjaksibtn.addEventListener("click", tyhjennaLista);
