@@ -221,13 +221,19 @@ function haeRavinteet() {
     fetch("http://localhost:3000/api/ravinteet/" + hakusana.value)
         .then(vastaus => vastaus.json())
         .then(data => {
+            JSON.stringify(data)
             console.log(data)
-            for (let d of data) {
-                ravinteetdiv.innerHTML = `Tuote on ${d.name}`
-
+            otsikko.innerHTML = "Ravintosisältö / 100g"
+      
+            for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
+                //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
+                const uusili = document.createElement('ul');
+                ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
+                ravinteetdiv.appendChild(uusili);
             }
         })
 }
+
 
 function tyhjennaLista() {
     let lista = document.querySelector("#lista");
@@ -255,6 +261,8 @@ function tyhjennaLista() {
         listaelementti.remove();
     }
 }
+
+
 
 
 tallennusbtn.addEventListener("click", lähetys);
