@@ -29,16 +29,16 @@
                 <input type="text" id="hakusana" name="hakusana" placeholder="tuotteen nimi">
                 <input type="text" id="maara" name="maara" placeholder="määrä">
                 <select id="yksikko">
-                    <option value=""></option>
-                    <option value="l">litraa</option>
+                    <option value="kpl">kappaletta</option>
+                    <option value="litra(a)">litraa</option>
                     <option value="kg">kiloa</option>
                     <option value="g">grammaa</option>
-                    <option value="kpl">kappaletta</option>
                     <option value="pss">pussia</option>
                     <option value="prk">purkkia</option>
-                </select><br>
-                <button id="lisaa" type="button">Tarjoiluehdotus</button>
+              </select>
                 <button id="tallennus" type="button">Tallenna listalle</button>
+                <button id="listatyhjaksibtn" type="button">Tyhjennä lista</button>
+              <br>
               <button id="ravinteet" type="button">Hae ravintosisältö</button>
             </form>
             <hr>
@@ -46,8 +46,8 @@
                 <ol id="lista">
                 </ol>
             </div>
-            <div id="ravinteetdiv">
-            </div>
+            <div id="otsikko"></div>
+            <div id="ravinteetdiv"></div>
         </section>
         <aside>
             <div id="kuvadiv">
@@ -56,7 +56,7 @@
         </aside>
     
     </div>
-
+<p></p>
     <script src="./javascripts/restclient.js"></script>
 </body>
 
