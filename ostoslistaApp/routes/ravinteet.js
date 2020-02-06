@@ -3,17 +3,14 @@ var router = express.Router();
 var fetch = require('node-fetch');
 var fs = require('fs');
 
-router.route('/:hakusana').get(function (req, res) {
+router.route('/:hakusana').get(function (req, res) { //lähettää pyynnön Fineli rest apiin
         const haku = req.params.hakusana
-        fetch("https://fineli.fi/fineli/api/v1/foods?q=" + haku)
+        fetch("https://fineli.fi/fineli/api/v1/foods?q=" + haku) // hakee hakusanalla tuotekategorian ravintosisällöt
           .then(function (fetchres) {
-            // console.log(fetchres)
             //muuttaa jsoniksi
             return fetchres.json()
           })
-          //lähettää kuvan localhostille selaimelle
-          .then(function (data) {
-            // console.log(data)
+          .then(function (data) { //lähettää datan localhostille selaimelle
             res.json(data)
           })
   })
