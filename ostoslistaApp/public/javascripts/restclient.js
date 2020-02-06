@@ -4,6 +4,7 @@ const ravinteetbtn = document.querySelector("#ravinteet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
 class Tuote {
+
     constructor(hakusana, maara) {
         this.hakusana = hakusana;
         this.maara = maara;
@@ -31,7 +32,7 @@ function poista() {
 
     // luodaan DELETE -fetch-pyyntö. 
     fetch("http://localhost:3000/api/users/", {
-         //pitääkö olla await???? -otto
+        //pitääkö olla await???? -otto
         method: "DELETE",
         headers: {
             'Content-Type': 'application/json'
@@ -92,6 +93,22 @@ function lähetys() {
 
     let ostos = new Tuote(hakusana.value, maara.value);
 
+    //tarkistetaan ettei määrä ole vähemmän kuin 1 tai muuta kuin nro
+    if (ostos.maara < 1 || isNaN(parseInt(ostos.maara))) {
+        alert("lisää vähintään yksi!");
+        return;
+    }
+
+    //tarkistetaan ettei tuotteen nimellä ole jo listalla jotain
+    try {
+        loytyykoJoListalta(ostos.hakusana);
+    }
+    catch (error) {
+        alert(error);
+        return;
+    }
+
+    //suoritetaan post-pyyntö listalle
     fetch("http://localhost:3000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -103,10 +120,29 @@ function lähetys() {
                 lisääListalle(data[i].hakusana, data[i].maara);
             }
         })
-    lisääListalle(hakusana.value, maara.value);
+        listaus();
 }
+
+function loytyykoJoListalta(ostos) {
+    let ul = document.querySelector("#lista")
+    let liArr = ul.getElementsByTagName("li")
+
+    for (i = 0; i < liArr.length; i++) {
+        let item = liArr[i];
+        let regex = /^[A-Z]+/i;
+        let listaTuote = item.innerText.match(regex)[0];
+        
+        if (ostos === listaTuote){
+            throw "Tuote löytyy jo listalta. Poista tai muokkaa listalta löytyvää tuotetta.";
+        }
+    }
+}
+
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
+    while(document.querySelector("#lista").firstChild){
+        document.querySelector("#lista").removeChild(document.querySelector("#lista").firstChild);
+    }
     fetch("http://localhost:3000/api/users")
         .then(vastaus => vastaus.json())
         .then(data => {
@@ -139,10 +175,6 @@ function lisääListalle(hakusana, maara) {
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
-
-    //lähetetään jsoniin
-    let tallennus = new Tuote(hakusana, maara);
-    // lähetys(tallennus);
 }
 
 function hae() {
