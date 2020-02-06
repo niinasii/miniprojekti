@@ -25,14 +25,18 @@
         <section>
             <form id="hakuform">
                 <input type="text" id="hakusana" name="hakusana" placeholder="hae tuotetta">
-                <input type="text" id="maara" name="maara" placeholder="määrä"><br>
-                <button id="lisaa" type="button">Tarkista saatavuus</button><br><button id="tallennus"
-                    type="button">Tallenna listalle</button>
+                <input type="text" id="maara" name="maara" placeholder="määrä">
+                <button id="lisaa" type="button">Fiilistele</button><button id="tallennus" type="button">Tallenna listalle</button>
+                <br>
+              <button id="ravinteet" type="button">Hae ravintosisältö</button>
             </form>
             <hr>
             <div class="output">
                 <ol id="lista">
                 </ol>
+            </div>
+            <div id="ravinteetdiv">
+                <div id="ravinteetkuva"></div>
             </div>
         </section>
         <aside>
@@ -40,6 +44,7 @@
                 <img src="images/placeholder.png" alt="Haetun tuotteen kuva" id="tuotekuva">
             </div>
         </aside>
+    
     </div>
 
     <script src="./javascripts/restclient.js"></script>
