@@ -295,7 +295,7 @@ function haeRavinteetListasta() {
                 ravinteetdiv.appendChild(uusili);
             }
         })
-
+    }
 function haeAanet() {
 
     let taulukko = []
