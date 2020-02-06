@@ -66,7 +66,7 @@ hr {
 
 body {
   margin: 10px;
-  background-color: thistle;
+  background-color: whitesmoke;
 }
 
 a {
@@ -80,26 +80,24 @@ a {
 .grid-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 150px 100px 100px 600px;
+  grid-template-rows: 120px 120px 120px 200px 250px 200px;
 }
 
 header {
-  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 5;
+  grid-row-start: 1;
+  grid-row-end: 1;
   padding: 20px;
-  border-radius: 20px 20px 0 0;
   text-align: center;
 }
 
 main {
-  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 5;
   grid-row-start: 4;
-  grid-row-end: 5;
+  grid-row-end: 6;
   padding: 20px;
-  border-radius: 0px 0px 20px 20px;
   overflow-y: auto;
 }
 
@@ -109,9 +107,15 @@ aside {
   grid-column-end: 5;
   grid-row-start: 2;
   grid-row-end: 4;
-  border-radius: 0px 0px 0px 0px;
   text-align: center;
   padding: 10px;
+}
+
+section {
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row-start: 6;
+  grid-row-end: 7;
 }
 
 #kuvadiv {
@@ -134,10 +138,10 @@ form {
 
 #otsikko {
   margin-left: 20px;
-  font-family: kursivoitu;
   color: darkorchid;
   font-size: 200%;
 }
+
 .nappitehty, .nappipoista, .nappimuokkaa {
   float: right;
 }
@@ -149,4 +153,8 @@ li {
 ol {
   background-color: white;
   border-radius: 20px;
+}
+
+#ravinteetdiv {
+  margin-left: 20px;
 }
