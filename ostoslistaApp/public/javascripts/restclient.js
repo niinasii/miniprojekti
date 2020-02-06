@@ -27,7 +27,7 @@ function poista() {
     let nappi = this;
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
-    let regex = /^[A-Z]+/i;
+    let regex = /^[A-ZÅÄÖ]+/i;
     let ostos = listateksti.match(regex);
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length);
@@ -55,7 +55,7 @@ function muokkaa() {
     this.setAttribute("disabled", "true")
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
-    let ostosregex = /^[A-Z]+/i;
+    let ostosregex = /^[A-ZÅÄÖ]+/i;
     let ostos = listateksti.match(ostosregex);
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length);
@@ -158,7 +158,7 @@ function loytyykoJoListalta(ostos) {
 
     for (i = 0; i < liArr.length; i++) {
         let item = liArr[i];
-        let regex = /^[A-Z]+/i;
+        let regex = /^[A-ZÅÄÖ]+/i;
         let listaTuote = item.innerText.match(regex)[0];
 
         if (ostos === listaTuote) {
@@ -221,8 +221,17 @@ function haeKuva() {
 
 function haeKuvaListasta(event) {
     //kaivetaan esiin listatuotteen nimi
-    let regex = /^[A-Z]+/i;
+    let regex = /^[A-ZÅÄÖ]+/i;
     let listaTuote = event.path[0].innerText.match(regex)[0];
+
+    //tämä erittäin köykäinen if-else if-else -lauseke estää klikkausten aiheuttamat ei-toivotut kuvahaut. En ole tästä ylpeä.
+    if (listaTuote === "Muokkaa" || listaTuote === "Peruuta" || listaTuote === "Kerätty" || listaTuote === "Poista" || listaTuote === "poisto"){
+        listaTuote = event.path[1].innerText.match(regex)[0];
+    } else if (listaTuote === "kpl"){
+        listaTuote = event.path[2].innerText.match(regex)[0];
+    } else if (listaTuote === "Päivitä") {
+        listaTuote = event.path[3].innerText.match(regex)[0];
+    }
 
     //haetaan kuva tuotteen nimellä
     fetch("http://localhost:3000/api/users/" + listaTuote)
@@ -258,7 +267,7 @@ function tyhjennaLista() {
     while (lista.firstChild) {
         let listaelementti = lista.firstChild;
         let listateksti = listaelementti.innerHTML;
-        let regex = /^[A-Z]+/i;
+        let regex = /^[A-ZÅÄÖ]+/i;
         let ostos = listateksti.match(regex);
         ostos = ostos[0];
         ostos = ostos.substring(0, ostos.length);
