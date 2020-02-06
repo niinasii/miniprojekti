@@ -1,6 +1,7 @@
 const hakubtn = document.querySelector("#lisaa");
 const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
+const aanetbtn = document.querySelector("#aanet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
 const yksikko = document.querySelector("#yksikko");
@@ -230,6 +231,31 @@ function haeRavinteet() {
         })
 }
 
+function haeAanet() {
+
+    let taulukko = []
+
+    fetch("http://localhost:3000/api/aanet")
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            for (let i = 0; i < data.length; i++) {
+                // taulukko.push(`${d.hakusana}`)
+                let rimpsu = data[i].hakusana
+                taulukko.push(rimpsu)
+            // (let i = 0; i < data.length; i++) {
+            //     let ostos = new Tuote(data[i].hakusana, data[i].maara, data[i].yksikko)
+            // JSON.parse(rimpsu)
+            console.log(rimpsu)
+
+    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src="
+        // let ostos = ('ostokset.json')
+        document.getElementById("aani").src = osoite + taulukko
+        console.log(osoite)
+    } })
+    
+}
+
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
 ravinteetbtn.addEventListener("click", haeRavinteet);
+aanetbtn.addEventListener("click", haeAanet);
