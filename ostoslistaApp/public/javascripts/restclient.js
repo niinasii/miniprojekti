@@ -1,7 +1,9 @@
 const hakubtn = document.querySelector("#lisaa");
 const tallennusbtn = document.querySelector("#tallennus");
+const ravinteetbtn = document.querySelector("#ravinteet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
+
 
 class Tuote {
     constructor(hakusana, maara) {
@@ -14,7 +16,7 @@ function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
     ostos.classList.toggle("yliviivaus"); // Lisää listaelementille luokan yliviivaus -otto
-    nappi.innerText === "Peruuta" ? nappi.innerText = "Tehty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
+    nappi.innerText === "Peruuta" ? nappi.innerText = "Kerätty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
 function poista() {
@@ -103,8 +105,8 @@ function lähetys() {
                 lisääListalle(data[i].hakusana, data[i].maara);
             }
         })
+    lisääListalle(hakusana.value, maara.value);
 }
-
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
     fetch("http://localhost:3000/api/users")
@@ -121,11 +123,11 @@ function lisääListalle(hakusana, maara) {
     let ostos = document.createElement('li'); //luodaan uusi lista-elementti
     ostos.innerHTML = `${hakusana} x ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
     let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
-    nappitehty.innerText = "Tehty"; //napin tekstiksi Tehty
+    nappitehty.innerText = "Kerätty"; //napin tekstiksi Tehty
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
     nappipoista.innerText = "Poista"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
-    nappimuokkaa.innerText = "Muokkaa"
+    nappimuokkaa.innerText = "Muokkaa määrää"
     ostos.appendChild(nappitehty); //lisätään ostos-html elementiin nappitehty
     ostos.appendChild(nappipoista); //listään ostos-html elementiin nappipoista
     ostos.appendChild(nappimuokkaa); //lisätään ostos-elementille nappi muokkaa
@@ -153,9 +155,23 @@ function hae() {
             let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
             document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
         })
-    lisääListalle(hakusana.value, maara.value);
+    // lisääListalle(hakusana.value, maara.value);
 }
+
+function haeRavinteet() {
+
+    fetch("http://localhost:3000/api/ravinteet/" + hakusana.value)
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            console.log(data)
+            for (let d of data) {
+                ravinteetdiv.innerHTML = `Tuote on ${d.name}`
+                
+        }
+})}
+
 
 hakubtn.addEventListener("click", hae);
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
+ravinteetbtn.addEventListener("click", haeRavinteet);
