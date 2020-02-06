@@ -98,7 +98,6 @@ main {
   grid-row-start: 4;
   grid-row-end: 6;
   padding: 20px;
-  overflow-y: auto;
 }
 
 aside {
@@ -109,13 +108,6 @@ aside {
   grid-row-end: 4;
   text-align: center;
   padding: 10px;
-}
-
-section {
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 6;
-  grid-row-end: 7;
 }
 
 #kuvadiv {
@@ -140,6 +132,8 @@ form {
   margin-left: 20px;
   color: darkorchid;
   font-size: 200%;
+  margin-top: 50px;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 .nappitehty, .nappipoista, .nappimuokkaa {
@@ -150,11 +144,11 @@ li {
   padding: 5px;
 }
 
-ol {
-  background-color: white;
-  border-radius: 20px;
-}
-
 #ravinteetdiv {
   margin-left: 20px;
+}
+
+#wrappi {
+  background-color: white;
+  border-radius: 20px;
 }

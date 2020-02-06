@@ -101,7 +101,6 @@ main {
   grid-row-end: 5;
   padding: 20px;
   border-radius: 0 0 0px 20px;
-  overflow-y: auto;
 }
 
 img {
@@ -115,13 +114,6 @@ aside {
   grid-row-end: 4;
   text-align: left;
   padding: 10px;
-}
-
-section {
-  grid-column-start: 3;
-  grid-column-end: 5;
-  grid-row-start: 4;
-  grid-row-end: 5;
 }
 
 #kuvadiv {
@@ -158,6 +150,11 @@ li {
 }
 
 ol {
+  background-color: white;
+  border-radius: 20px;
+}
+
+#wrappi {
   background-color: white;
   border-radius: 20px;
 }

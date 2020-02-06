@@ -90,7 +90,6 @@ main {
   grid-row-start: 4;
   grid-row-end: 5;
   padding: 20px;
-  overflow-y: auto;
 }
 
 aside {
@@ -138,7 +137,7 @@ li {
   padding: 5px;
 }
 
-ol {
+#wrappi {
   background-color: white;
   border-radius: 20px;
 }
