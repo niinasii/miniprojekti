@@ -345,6 +345,7 @@ function tyhjennaLista() {
             .then(data => console.log("poisto onnistunut, vastaus: " + data));
 
         listaelementti.remove();
+        ravinteetdiv.innerHTML = "";
     }
 }
 
