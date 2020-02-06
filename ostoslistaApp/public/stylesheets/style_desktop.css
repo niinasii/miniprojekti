@@ -12,6 +12,10 @@
   src: url(../fonts/Aldithtalic.ttf)
 }
 
+.nappitehty, .nappipoista, .nappimuokkaa {
+float: right;
+}
+
 li:hover {
   cursor: pointer;
   background-color: pink;
@@ -60,8 +64,6 @@ button {
   border-width: 1px;
   border-color: orchid;
   box-shadow: darkorchid 1px 1px 3px;
-  padding: 2px;
-  margin: 2px;
 }
 
 input {
