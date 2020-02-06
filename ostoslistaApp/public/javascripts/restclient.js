@@ -2,6 +2,7 @@ const hakubtn = document.querySelector("#lisaa");
 const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
 const aanetbtn = document.querySelector("#aanet");
+const listatyhjaksibtn = document.querySelector("#listatyhjaksibtn");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
 const yksikko = document.querySelector("#yksikko");
@@ -27,7 +28,7 @@ function poista() {
     let nappi = this;
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
-    let regex = /^[A-Z]+/i;
+    let regex = /^[A-ZÅÄÖ]+/i;
     let ostos = listateksti.match(regex);
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length);
@@ -52,9 +53,10 @@ function poista() {
 function muokkaa() {
     //haetaan tuotteen nimi ja tallennetaan se muuttujaan "ostos"
     let nappi = this;
+    this.setAttribute("disabled", "true")
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
-    let ostosregex = /^[A-Z]+/i;
+    let ostosregex = /^[A-ZÅÄÖ]+/i;
     let ostos = listateksti.match(ostosregex);
     ostos = ostos[0];
     ostos = ostos.substring(0, ostos.length);
@@ -71,7 +73,19 @@ function muokkaa() {
     tallennusnappi.setAttribute("type", "button");
     tallennusnappi.setAttribute("id", "tallennusnappi");
     tallennusnappi.innerText = "Päivitä";
-
+    //luodaan muokattavan tuotteen yksikkölista
+    let yksikkolista = document.createElement("select");
+    yksikkolista.setAttribute("id", "muokkaayksikkolista")
+    //luodaan yksikkölistan valinnat
+    let yksikkoArr = ["kpl","litra(a)","kg","g","pss","prk"];
+    yksikkoArr.forEach(yksikkoteksti => {
+        let yksikkolistaitem = document.createElement("option");
+        yksikkolistaitem.setAttribute("value", yksikkoteksti);
+        yksikkolistaitem.innerText = yksikkoteksti;
+        yksikkolista.appendChild(yksikkolistaitem);
+    });
+    
+    listaelementti.appendChild(yksikkolista);
     listaelementti.appendChild(tallennusnappi);
 
     tallennusnappi.addEventListener("click", paivita);
@@ -79,7 +93,12 @@ function muokkaa() {
 
     function paivita() {    //kirjoitetaan put-pyyntö
         let uusimaara = muokkaakentta.value;
-        let paivitys = new Tuote(ostos, uusimaara);
+        if (uusimaara === ""){
+            alert("Kenttä ei voi olla tyhjä.");
+            return;
+        }
+        let yksikko = yksikkolista.value;
+        let paivitys = new Tuote(ostos, uusimaara, yksikko);
         fetch("http://localhost:3000/api/users/", {
             method: "PUT",
             headers: {
@@ -90,12 +109,18 @@ function muokkaa() {
             .then(response => response.json())
 
         listaelementti.remove();
-        lisääListalle(ostos, uusimaara);
+        lisääListalle(paivitys);
     }
 }
 function lähetys() {
 
     let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
+
+    //tarkistetaan ettei tuotteen nimi ala numerolla
+    if (!ostos.hakusana.charAt(0).match(/[a-z]/i)) {
+        alert("Tuotenimi ei voi alkaa numerolla.");
+        return;
+    }
 
     //tarkistetaan ettei määrä ole vähemmän kuin 1 tai muuta kuin nro
     if (ostos.maara < 1 || isNaN(parseInt(ostos.maara))) {
@@ -134,7 +159,7 @@ function loytyykoJoListalta(ostos) {
 
     for (i = 0; i < liArr.length; i++) {
         let item = liArr[i];
-        let regex = /^[A-Z]+/i;
+        let regex = /^[A-ZÅÄÖ]+/i;
         let listaTuote = item.innerText.match(regex)[0];
 
         if (ostos === listaTuote) {
@@ -145,9 +170,6 @@ function loytyykoJoListalta(ostos) {
 
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
-
-
-
     while (document.querySelector("#lista").firstChild) {
         document.querySelector("#lista").removeChild(document.querySelector("#lista").firstChild);
     }
@@ -200,8 +222,17 @@ function haeKuva() {
 
 function haeKuvaListasta(event) {
     //kaivetaan esiin listatuotteen nimi
-    let regex = /^[A-Z]+/i;
+    let regex = /^[A-ZÅÄÖ]+/i;
     let listaTuote = event.path[0].innerText.match(regex)[0];
+
+    //tämä erittäin köykäinen if-else if-else -lauseke estää klikkausten aiheuttamat ei-toivotut kuvahaut. En ole tästä ylpeä.
+    if (listaTuote === "Muokkaa" || listaTuote === "Peruuta" || listaTuote === "Kerätty" || listaTuote === "Poista" || listaTuote === "poisto"){
+        listaTuote = event.path[1].innerText.match(regex)[0];
+    } else if (listaTuote === "kpl"){
+        listaTuote = event.path[2].innerText.match(regex)[0];
+    } else if (listaTuote === "Päivitä") {
+        listaTuote = event.path[3].innerText.match(regex)[0];
+    }
 
     //haetaan kuva tuotteen nimellä
     fetch("http://localhost:3000/api/users/" + listaTuote)
@@ -255,7 +286,38 @@ function haeAanet() {
     
 }
 
+function tyhjennaLista() {
+    let lista = document.querySelector("#lista");
+    while (lista.firstChild) {
+        let listaelementti = lista.firstChild;
+        let listateksti = listaelementti.innerHTML;
+        let regex = /^[A-ZÅÄÖ]+/i;
+        let ostos = listateksti.match(regex);
+        ostos = ostos[0];
+        ostos = ostos.substring(0, ostos.length);
+
+        let ostosolio = new Tuote(ostos, 0);
+
+        // luodaan DELETE -fetch-pyyntö. 
+        fetch("http://localhost:3000/api/users/", {
+            method: "DELETE",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ostosolio)
+        })
+            .then(response => response.json())
+            .then(data => console.log("poisto onnistunut, vastaus: " + data));
+
+        listaelementti.remove();
+    }
+}
+
+
+
+
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
 ravinteetbtn.addEventListener("click", haeRavinteet);
+listatyhjaksibtn.addEventListener("click", tyhjennaLista);
 aanetbtn.addEventListener("click", haeAanet);
