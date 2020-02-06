@@ -17,8 +17,17 @@
         </header>
          <section>
             <form id="hakuform">
-                <input type="text" id="hakusana" name="hakusana" placeholder="hae tuotetta">
+                <input type="text" id="hakusana" name="hakusana" placeholder="tuotteen nimi">
                 <input type="text" id="maara" name="maara" placeholder="määrä">
+                <select id="yksikko">
+                    <option value=""></option>
+                    <option value="l">litraa</option>
+                    <option value="kg">kiloa</option>
+                    <option value="g">grammaa</option>
+                    <option value="kpl">kappaletta</option>
+                    <option value="pss">pussia</option>
+                    <option value="prk">purkkia</option>
+                </select>
                 <button id="lisaa" type="button">Tarjoiluehdotus</button>
                 <button id="tallennus" type="button">Tallenna listalle</button>
             </form>
