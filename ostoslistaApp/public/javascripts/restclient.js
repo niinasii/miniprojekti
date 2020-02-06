@@ -52,6 +52,7 @@ function poista() {
 function muokkaa() {
     //haetaan tuotteen nimi ja tallennetaan se muuttujaan "ostos"
     let nappi = this;
+    this.setAttribute("disabled", "true")
     let listaelementti = nappi.parentElement;
     let listateksti = listaelementti.innerHTML;
     let ostosregex = /^[A-Z]+/i;
@@ -71,7 +72,19 @@ function muokkaa() {
     tallennusnappi.setAttribute("type", "button");
     tallennusnappi.setAttribute("id", "tallennusnappi");
     tallennusnappi.innerText = "Päivitä";
-
+    //luodaan muokattavan tuotteen yksikkölista
+    let yksikkolista = document.createElement("select");
+    yksikkolista.setAttribute("id", "muokkaayksikkolista")
+    //luodaan yksikkölistan valinnat
+    let yksikkoArr = ["kpl","litra(a)","kg","g","pss","prk"];
+    yksikkoArr.forEach(yksikkoteksti => {
+        let yksikkolistaitem = document.createElement("option");
+        yksikkolistaitem.setAttribute("value", yksikkoteksti);
+        yksikkolistaitem.innerText = yksikkoteksti;
+        yksikkolista.appendChild(yksikkolistaitem);
+    });
+    
+    listaelementti.appendChild(yksikkolista);
     listaelementti.appendChild(tallennusnappi);
 
     tallennusnappi.addEventListener("click", paivita);
@@ -79,7 +92,12 @@ function muokkaa() {
 
     function paivita() {    //kirjoitetaan put-pyyntö
         let uusimaara = muokkaakentta.value;
-        let paivitys = new Tuote(ostos, uusimaara);
+        if (uusimaara === ""){
+            alert("Kenttä ei voi olla tyhjä.");
+            return;
+        }
+        let yksikko = yksikkolista.value;
+        let paivitys = new Tuote(ostos, uusimaara, yksikko);
         fetch("http://localhost:3000/api/users/", {
             method: "PUT",
             headers: {
@@ -90,7 +108,7 @@ function muokkaa() {
             .then(response => response.json())
 
         listaelementti.remove();
-        lisääListalle(ostos, uusimaara);
+        lisääListalle(paivitys);
     }
 }
 function lähetys() {
