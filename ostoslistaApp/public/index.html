@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./stylesheets/style_mobile.css"
         media="only screen and (min-width: 0px) and (max-width: 480px)" />
 </head>
+
 <body>
     <div class="grid-container">
         <header>
@@ -33,29 +34,28 @@
                     <option value="g">grammaa</option>
                     <option value="pss">pussia</option>
                     <option value="prk">purkkia</option>
-                </select><br>
+                </select>
+                <p></p>
                 <button id="tallennus" type="button">Tallenna listalle</button>
-              <br>
-              <button id="ravinteet" type="button">Hae ravintosisältö</button>
-              <br>
-              <button id="listatyhjaksibtn" type="button">Tyhjennä lista</button>
-              <br>
-              <button id="aanet" type="button">Kuuntele</button>
-
+                <button id="ravinteet" type="button">Hae ravintosisältö</button><br>
+                <button id="listatyhjaksibtn" type="button">Tyhjennä lista</button>
+                <button id="aanet" type="button">Kuuntele</button>
             </form>
             <hr>
-            <div class="output">
-                <ol id="lista">
-                </ol>
-          </div>
-            <br>
-            <div id="otsikko"></div>
-            <br>
-            <div id="ravinteetdiv"> 
-                <div id="ravinteetkuva"></div>
+            <div id="wrappi">
+                <div class="output">
+                    <ol id="lista">
+                    </ol>
+                </div>
+                <br>
+                <div id="otsikko"></div>
+                <br>
+                <div id="ravinteetdiv">
+                    <div id="ravinteetkuva"></div>
+                </div>
+                <audio autoplay id="aani"
+                    src="http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src="></audio>
             </div>
-            <audio autoplay id="aani" src="http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src="></audio>
-        </section>
         </main>
         <aside>
             <div id="kuvadiv">
@@ -64,6 +64,7 @@
         </aside>
     </div>
     <script src="./javascripts/restclient.js"></script>
-    
+
 </body>
+
 </html>
