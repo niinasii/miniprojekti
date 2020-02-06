@@ -96,6 +96,12 @@ function lähetys() {
 
     let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
+    //tarkistetaan ettei tuotteen nimi ala numerolla
+    if (!ostos.hakusana.charAt(0).match(/[a-z]/i)){
+        alert("Tuotenimi ei voi alkaa numerolla.");
+        return; 
+    }
+
     //tarkistetaan ettei määrä ole vähemmän kuin 1 tai muuta kuin nro
     if (ostos.maara < 1 || isNaN(parseInt(ostos.maara))) {
         alert("lisää vähintään yksi!");
