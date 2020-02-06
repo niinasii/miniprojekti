@@ -19,6 +19,7 @@
             <form id="hakuform">
                 <input type="text" id="hakusana" name="hakusana" placeholder="tuotteen nimi">
                 <input type="text" id="maara" name="maara" placeholder="määrä">
+
                 <select id="yksikko">
                     <option value=""></option>
                     <option value="l">litraa</option>
@@ -29,12 +30,19 @@
                     <option value="prk">purkkia</option>
                 </select>
                 <button id="lisaa" type="button">Tarjoiluehdotus</button>
+
                 <button id="tallennus" type="button">Tallenna listalle</button>
+              <br>
+              <button id="ravinteet" type="button">Hae ravintosisältö</button>
+
             </form>
             <hr>
             <div class="output">
                 <ol id="lista">
                 </ol>
+            </div>
+            <div id="ravinteetdiv">
+                <div id="ravinteetkuva"></div>
             </div>
         </section>
         <aside>
@@ -42,6 +50,7 @@
                 <img src="images/placeholder.png" alt="Haetun tuotteen kuva" id="tuotekuva">
             </div>
         </aside>
+    
     </div>
 
     <script src="./javascripts/restclient.js"></script>
