@@ -3,12 +3,14 @@ const tallennusbtn = document.querySelector("#tallennus");
 const ravinteetbtn = document.querySelector("#ravinteet");
 const hakusana = document.querySelector("#hakusana"); //hakukentän käyttäjän syöttämä sana lisätään fetch-pyynnössä urlin perään
 const maara = document.querySelector("#maara");
-
+const yksikko = document.querySelector("#yksikko");
 
 class Tuote {
-    constructor(hakusana, maara) {
+
+    constructor(hakusana, maara, yksikko) {
         this.hakusana = hakusana;
         this.maara = maara;
+        this.yksikko = yksikko;
     }
 }
 
@@ -92,8 +94,24 @@ function muokkaa() {
 }
 function lähetys() {
 
-    let ostos = new Tuote(hakusana.value, maara.value);
+    let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
+    //tarkistetaan ettei määrä ole vähemmän kuin 1 tai muuta kuin nro
+    if (ostos.maara < 1 || isNaN(parseInt(ostos.maara))) {
+        alert("lisää vähintään yksi!");
+        return;
+    }
+
+    //tarkistetaan ettei tuotteen nimellä ole jo listalla jotain
+    try {
+        loytyykoJoListalta(ostos.hakusana);
+    }
+    catch (error) {
+        alert(error);
+        return;
+    }
+
+    //suoritetaan post-pyyntö listalle
     fetch("http://localhost:3000/api/users", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -105,33 +123,58 @@ function lähetys() {
                 lisääListalle(data[i].hakusana, data[i].maara);
             }
         })
-    lisääListalle(hakusana.value, maara.value);
+    listaus();
+    haeKuva();
 }
+
+function loytyykoJoListalta(ostos) {
+    let ul = document.querySelector("#lista")
+    let liArr = ul.getElementsByTagName("li")
+
+    for (i = 0; i < liArr.length; i++) {
+        let item = liArr[i];
+        let regex = /^[A-Z]+/i;
+        let listaTuote = item.innerText.match(regex)[0];
+
+        if (ostos === listaTuote) {
+            throw "Tuote löytyy jo listalta. Poista tai muokkaa listalta löytyvää tuotetta.";
+        }
+    }
+}
+
 //hakee palvelimelle tallenetun json muotoisen ostoslistan
 function listaus() {
+
+
+
+    while (document.querySelector("#lista").firstChild) {
+        document.querySelector("#lista").removeChild(document.querySelector("#lista").firstChild);
+    }
     fetch("http://localhost:3000/api/users")
         .then(vastaus => vastaus.json())
         .then(data => {
             for (let i = 0; i < data.length; i++) {
-                lisääListalle(data[i].hakusana, data[i].maara);
+                let ostos = new Tuote(data[i].hakusana, data[i].maara, data[i].yksikko)
+                lisääListalle(ostos);
             }
         })
 }
 
-function lisääListalle(hakusana, maara) {
+function lisääListalle(ostos) {
     let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
-    let ostos = document.createElement('li'); //luodaan uusi lista-elementti
-    ostos.innerHTML = `${hakusana} x ${maara} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
+    let ostosLi = document.createElement('li'); //luodaan uusi lista-elementti
+    ostosLi.innerHTML = `${ostos.hakusana} x ${ostos.maara} ${ostos.yksikko} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
     let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
     nappitehty.innerText = "Kerätty"; //napin tekstiksi Tehty
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
     nappipoista.innerText = "Poista"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
     nappimuokkaa.innerText = "Muokkaa määrää"
-    ostos.appendChild(nappitehty); //lisätään ostos-html elementiin nappitehty
-    ostos.appendChild(nappipoista); //listään ostos-html elementiin nappipoista
-    ostos.appendChild(nappimuokkaa); //lisätään ostos-elementille nappi muokkaa
-    lista.appendChild(ostos); //julkaistaan koko höskä
+    ostosLi.appendChild(nappitehty); //lisätään ostosLi-html elementiin nappitehty
+    ostosLi.appendChild(nappipoista); //listään ostosLi-html elementiin nappipoista
+    ostosLi.appendChild(nappimuokkaa); //lisätään ostosLi-elementille nappi muokkaa
+    lista.appendChild(ostosLi); //julkaistaan koko höskä
+    ostosLi.addEventListener("click", haeKuvaListasta);
 
     nappitehty.addEventListener('click', yliviivaus); //lisätään napille toiminto "yliviivaus"
     nappipoista.addEventListener('click', poista); // lisätään napille toiminto "poista"
@@ -141,13 +184,9 @@ function lisääListalle(hakusana, maara) {
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
-
-    //lähetetään jsoniin
-    let tallennus = new Tuote(hakusana, maara);
-    // lähetys(tallennus);
 }
 
-function hae() {
+function haeKuva() {
     fetch("http://localhost:3000/api/users/" + hakusana.value)
         .then(vastaus => vastaus.json())
         .then(data => {
@@ -158,14 +197,30 @@ function hae() {
     // lisääListalle(hakusana.value, maara.value);
 }
 
-function haeRavinteet() { //hakee ravintosisällöt
+function haeKuvaListasta(event) {
+    //kaivetaan esiin listatuotteen nimi
+    let regex = /^[A-Z]+/i;
+    let listaTuote = event.path[0].innerText.match(regex)[0];
+
+    //haetaan kuva tuotteen nimellä
+    fetch("http://localhost:3000/api/users/" + listaTuote)
+        .then(vastaus => vastaus.json())
+        .then(data => {
+            // data pitää sisällään 20 eri ruokakuvavaihtoehtoa.
+            let url = data.hits[0].largeImageURL;  //poimitaan vastausdatasta kuvan url-osoite ja asetetaan se muutujan url arvoksi.
+            document.getElementById("tuotekuva").src = url; //vaihdetaan kuvaelementin src-attribuutiksi datasta haettu url.
+        })
+}
+
+function haeRavinteet() {
+
     fetch("http://localhost:3000/api/ravinteet/" + hakusana.value)
         .then(vastaus => vastaus.json())
         .then(data => {
             JSON.stringify(data)
             console.log(data)
             otsikko.innerHTML = "Ravintosisältö / 100g"
-
+      
             for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
                 //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
                 const uusili = document.createElement('ul');
@@ -175,7 +230,6 @@ function haeRavinteet() { //hakee ravintosisällöt
         })
 }
 
-hakubtn.addEventListener("click", hae);
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);
 ravinteetbtn.addEventListener("click", haeRavinteet);

@@ -3,8 +3,8 @@
 }
 
 @font-face {
-font-family: otsikko;
-src: url(../fonts/ALDITHRegular.ttf)
+  font-family: otsikko;
+  src: url(../fonts/ALDITHRegular.ttf)
 }
 
 h1 {
@@ -19,11 +19,15 @@ button {
   border-width: 1px;
   border-color: orchid;
   box-shadow: darkorchid 1px 1px 3px;
+  padding: 2px;
+  margin: 2px;
 }
 
 input {
   border-color: orchid;
   border-width: 1px;
+  padding: 2px;
+  margin: 2px;
 }
 
 hr {
@@ -46,7 +50,7 @@ a {
 .grid-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 150px 150px 150px 200px;
+  grid-template-rows: 150px 150px 300px 300px;
 }
 
 header {
@@ -65,7 +69,7 @@ section {
   grid-row-end: 5;
   padding: 20px;
   border-radius: 0 0 0px 20px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 aside {
@@ -79,9 +83,18 @@ aside {
   border-radius: 0 0 20px 0px;
 }
 
+#kuvadiv {
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 10px;
+}
+
 #tuotekuva {
   max-width: 500px;
   max-height: 450px;
+  width: 100%;
+  height: 100%;
 }
 
 form {
