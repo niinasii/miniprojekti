@@ -264,8 +264,8 @@ function haeRavinteet() {
             for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
                 //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
                 const uusili = document.createElement('ul');
-                ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
-                ravinteetdiv.appendChild(uusili);
+                uusili.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
+                document.querySelector("#ravinteetdiv").appendChild(uusili);
             }
         })
 }
@@ -292,7 +292,7 @@ function haeRavinteetListasta() {
                 //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
                 const uusili = document.createElement('ul');
                 ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
-                ravinteetdiv.appendChild(uusili);
+                document.querySelector("#ravinteetdiv").appendChild(uusili);
             }
         })
     }
