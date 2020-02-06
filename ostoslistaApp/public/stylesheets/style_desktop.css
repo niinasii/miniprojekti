@@ -9,11 +9,11 @@
 
 @font-face {
   font-family: kursivoitu;
-  src: url(../fonts/Aldithtalic.ttf)
+  src: url(../fonts/AldithGrunge.ttf)
 }
 
 .nappitehty, .nappipoista, .nappimuokkaa {
-float: right;
+  float: right;
 }
 
 li:hover {
@@ -26,11 +26,6 @@ h1 {
   color: darkorchid;
   font-size: 500%;
   font-family: otsikko;
-}
-
-h2 {
-  color: darkorchid;
-  font-family: kursivoitu;
 }
 
 /*ANIMOINTI*/
@@ -64,6 +59,7 @@ button {
   border-width: 1px;
   border-color: orchid;
   box-shadow: darkorchid 1px 1px 3px;
+  margin-left: 5px;
 }
 
 input {
@@ -104,7 +100,7 @@ header {
   border-radius: 20px 20px 0 0;
 }
 
-section {
+main {
   background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 3;
@@ -115,15 +111,20 @@ section {
   overflow-y: auto;
 }
 
+img {
+  text-align: center;
+}
+
 aside {
   background-color: whitesmoke;
   grid-column-start: 3;
   grid-column-end: 5;
   grid-row-start: 2;
   grid-row-end: 5;
-  text-align: center;
+  text-align: left;
   padding: 10px;
   border-radius: 0 0 20px 0px;
+  overflow-y: auto;
 }
 
 #kuvadiv {
@@ -137,7 +138,18 @@ aside {
   max-width: 500px;
   max-height: 450px;
   width: 100%;
-  height: 100%;
+  height: auto;
+}
+
+#otsikko {
+  margin-left: 20px;
+  font-family: kursivoitu;
+  color: darkorchid;
+  font-size: 200%;
+}
+
+#ravinteetdiv {
+  margin-left: 20px;
 }
 
 form {

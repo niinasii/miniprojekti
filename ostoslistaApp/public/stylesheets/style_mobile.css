@@ -92,7 +92,7 @@ header {
   text-align: center;
 }
 
-section {
+main {
   background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 5;
@@ -125,11 +125,21 @@ aside {
   max-width: 200px;
   max-height: 150px;
   width: 100%;
-  height: 100%;
+  height: auto;
 }
 
 form {
   margin-bottom: 30px;
+}
+
+#otsikko {
+  margin-left: 20px;
+  font-family: kursivoitu;
+  color: darkorchid;
+  font-size: 200%;
+}
+.nappitehty, .nappipoista, .nappimuokkaa {
+  float: right;
 }
 
 li {

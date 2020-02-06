@@ -15,16 +15,14 @@
     <link rel="stylesheet" href="./stylesheets/style_mobile.css"
         media="only screen and (min-width: 0px) and (max-width: 480px)" />
 </head>
-
-
 <body>
     <div class="grid-container">
         <header>
             <div id="animoitu">
-            <h1>Ostoslista</h1>
-        </div>
+                <h1>Ostoslista</h1>
+            </div>
         </header>
-        <section>
+        <main>
             <form id="hakuform">
                 <input type="text" id="hakusana" name="hakusana" placeholder="tuotteen nimi">
                 <input type="text" id="maara" name="maara" placeholder="määrä">
@@ -35,29 +33,25 @@
                     <option value="g">grammaa</option>
                     <option value="pss">pussia</option>
                     <option value="prk">purkkia</option>
-              </select>
+                </select><br>
                 <button id="tallennus" type="button">Tallenna listalle</button>
                 <button id="listatyhjaksibtn" type="button">Tyhjennä lista</button>
-              <br>
-              <button id="ravinteet" type="button">Hae ravintosisältö</button>
+                <button id="ravinteet" type="button">Hae ravintosisältö</button>
             </form>
             <hr>
             <div class="output">
                 <ol id="lista">
                 </ol>
             </div>
-            <div id="otsikko"></div>
-            <div id="ravinteetdiv"></div>
-        </section>
+        </main>
         <aside>
             <div id="kuvadiv">
                 <img src="images/placeholder.png" alt="Haetun tuotteen kuva" id="tuotekuva">
             </div>
+            <div id="otsikko"></div>
+            <div id="ravinteetdiv"></div>
         </aside>
-    
     </div>
-<p></p>
     <script src="./javascripts/restclient.js"></script>
 </body>
-
 </html>
