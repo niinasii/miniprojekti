@@ -254,22 +254,22 @@ function haeKuvaListasta(event) {
 
 function haeRavinteet() {
 
-    fetch("http://localhost:3000/api/ravinteet/" + hakusana.value)
+    fetch("http://localhost:3000/api/ravinteet/" + hakusana.value) //lähettää hakusanalla pyynnön palvelimelle
         .then(vastaus => vastaus.json())
         .then(data => {
-            JSON.stringify(data)
+            JSON.stringify(data) //muuttaa Javascript olioksi
             console.log(data)
             otsikko.innerHTML = "Ravintosisältö / 100g"
       
-            for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
-                //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
+            for (let i = 0; i < 3; i++) { //luuppaa läpi kolme ensimmäistä hakutulosta
+                //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt:
                 const uusili = document.createElement('ul');
-                uusili.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
+                uusili.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/1000).toFixed(2)} g </li>`;
+                //Edelline pyöristää luvut kahteen desimaaliin ja muuttaa suolan mg-->g
                 document.querySelector("#ravinteetdiv").appendChild(uusili);
             }
         })
 }
-
 
 function haeRavinteetListasta() {
     let nappi = this;
@@ -298,27 +298,21 @@ function haeRavinteetListasta() {
     }
 function haeAanet() {
 
-    let taulukko = []
+    let ostostaulukko = []
 
-    fetch("http://localhost:3000/api/aanet")
+    fetch("http://localhost:3000/api/aanet") //lähettää pyynnön palvelimelle
         .then(vastaus => vastaus.json())
         .then(data => {
-            for (let i = 0; i < data.length; i++) {
-                // taulukko.push(`${d.hakusana}`)
-                let rimpsu = data[i].hakusana
-                taulukko.push(rimpsu)
-            // (let i = 0; i < data.length; i++) {
-            //     let ostos = new Tuote(data[i].hakusana, data[i].maara, data[i].yksikko)
-            // JSON.parse(rimpsu)
-            console.log(rimpsu)
+            for (let i = 0; i < data.length; i++) { //looppaa datan läpi
+                let sanat = data[i].hakusana
+                ostostaulukko.push(sanat) //lisää ostostaulukkoon ostoslistan tuotteiden nimet
+            console.log(sanat)
 
-    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src="
-        // let ostos = ('ostokset.json')
-        document.getElementById("aani").src = osoite + taulukko
+    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src=" //voice rss api-osoite
+       
+        document.getElementById("aani").src = osoite + ostostaulukko
         console.log(osoite)
     } })
-    
-
 }
 
 function tyhjennaLista() {
