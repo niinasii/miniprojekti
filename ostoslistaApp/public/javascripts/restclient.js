@@ -344,6 +344,8 @@ function tyhjennaLista() {
 
         let ostosolio = new Tuote(ostos, 0);
 
+
+
         // luodaan DELETE -fetch-pyyntö. 
         fetch("http://localhost:3000/api/users/", {
             method: "DELETE",
@@ -356,9 +358,11 @@ function tyhjennaLista() {
             .then(data => console.log("poisto onnistunut, vastaus: " + data));
 
         listaelementti.remove();
-        ravinteetdiv.innerHTML = "";
-        otsikko.innerHTML = "";
+
     }
+    otsikko.innerHTML = "";
+    lista.innerHTML = "";
+    ravinteetdiv.innerHTML = "";
 }
 
 
