@@ -16,6 +16,7 @@ class Tuote {
     }
 }
 
+//merkkaa jo koriin kerätyn tuotteen yliviivatuksi
 function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
@@ -23,6 +24,7 @@ function yliviivaus() {
     nappi.innerText === "Peruuta" ? nappi.innerText = "Kerätty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
+//poistaa yhden listaelementin sekä clientti- että palvelinpäästä
 function poista() {
     //kaikki tämä regex-hulluus johtuu siitä, että listaelementin sisältöön kuuluu muutakin, kuin ostoksen nimi. älä kysy. -otto
     let nappi = this;
@@ -50,6 +52,7 @@ function poista() {
     listaelementti.remove(); //poistaa listaelementin, jonka lapsena poista-nappi on.
 }
 
+//muokkaa ostoksen määrää tai yksikköä selain- ja palvelinpäässä
 function muokkaa() {
     //haetaan tuotteen nimi ja tallennetaan se muuttujaan "ostos"
     let nappi = this;
@@ -77,14 +80,14 @@ function muokkaa() {
     let yksikkolista = document.createElement("select");
     yksikkolista.setAttribute("id", "muokkaayksikkolista")
     //luodaan yksikkölistan valinnat
-    let yksikkoArr = ["kpl","litra(a)","kg","g","pss","prk"];
+    let yksikkoArr = ["kpl", "litra(a)", "kg", "g", "pss", "prk"];
     yksikkoArr.forEach(yksikkoteksti => {
         let yksikkolistaitem = document.createElement("option");
         yksikkolistaitem.setAttribute("value", yksikkoteksti);
         yksikkolistaitem.innerText = yksikkoteksti;
         yksikkolista.appendChild(yksikkolistaitem);
     });
-    
+
     listaelementti.appendChild(yksikkolista);
     listaelementti.appendChild(tallennusnappi);
 
@@ -93,7 +96,7 @@ function muokkaa() {
 
     function paivita() {    //kirjoitetaan put-pyyntö
         let uusimaara = muokkaakentta.value;
-        if (uusimaara === ""){
+        if (uusimaara === "") {
             alert("Kenttä ei voi olla tyhjä.");
             return;
         }
@@ -112,14 +115,16 @@ function muokkaa() {
         lisääListalle(paivitys);
     }
 }
+
+//lähettää uuden tuotteen
 function lähetys() {
     ravinteetdiv.innerHTML = ""; // tyhjentää ravinnelistan painettaessa tallenna listalle- nappia
 
     let ostos = new Tuote(hakusana.value, maara.value, yksikko.value);
 
     //tarkistetaan ettei tuotteen nimi ala numerolla
-    if (!ostos.hakusana.charAt(0).match(/[a-z]/i)) {
-        alert("Tuotenimi ei voi alkaa numerolla.");
+    if (!ostos.hakusana.charAt(0).match(/[a-zåöä]/i)) {
+        alert("Tuotenimi ei voi alkaa muulla kuin kirjaimella.");
         return;
     }
 
@@ -195,7 +200,7 @@ function lisääListalle(ostos) {
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
     nappipoista.innerText = "Poista"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
-    nappimuokkaa.innerText = "Muokkaa määrää";
+    nappimuokkaa.innerText = "Muokkaa";
     let nappiravinto = document.createElement("button");
     nappiravinto.innerText = "Näytä ravintosisältö";
     ostosLi.appendChild(nappiravinto); //lisätään itemille ravintosisältöpainike
@@ -231,12 +236,17 @@ function haeKuva() {
 function haeKuvaListasta(event) {
     //kaivetaan esiin listatuotteen nimi
     let regex = /^[A-ZÅÄÖ]+/i;
-    let listaTuote = event.path[0].innerText.match(regex)[0];
-
+    let listaTuote;
+    if (event.path) {
+        listaTuote = event.path[0].innerText.match(regex)[0];
+    } else {
+        console.log("ei löydy.");
+        return;
+    }
     //tämä erittäin köykäinen if-else if-else -lauseke estää klikkausten aiheuttamat ei-toivotut kuvahaut. En ole tästä ylpeä.
-    if (listaTuote === "Muokkaa" || listaTuote === "Peruuta" || listaTuote === "Kerätty" || listaTuote === "Poista" || listaTuote === "poisto"){
+    if (listaTuote === "Muokkaa" || listaTuote === "Peruuta" || listaTuote === "Kerätty" || listaTuote === "Poista" || listaTuote === "poisto") {
         listaTuote = event.path[1].innerText.match(regex)[0];
-    } else if (listaTuote === "kpl"){
+    } else if (listaTuote === "kpl") {
         listaTuote = event.path[2].innerText.match(regex)[0];
     } else if (listaTuote === "Päivitä") {
         listaTuote = event.path[3].innerText.match(regex)[0];
@@ -287,15 +297,15 @@ function haeRavinteetListasta() {
             JSON.stringify(data)
             console.log(data)
             otsikko.innerHTML = "Ravintosisältö / 100g"
-      
+
             for (let i = 0; i < 3; i++) { //palauttaa kolme ensimmäistä hakutulosta
                 //Hakee nimen ja sen alle listalementeiksi valitus ravintosisällöt
                 const uusili = document.createElement('ul');
-                ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt)/100).toFixed(2)} g </li>`;
+                ravinteetdiv.innerHTML += `${data[i].name.fi} <li> alkoholi: ${(data[i].alcohol).toFixed(2)} % </li> <li>proteiini: ${data[i].protein.toFixed(2)} g </li> <li> energia: ${data[i].energyKcal.toFixed(2)} Kcal </li> <li> hiilarit: ${data[i].carbohydrate.toFixed(2)} g </li> <li>rasva: ${data[i].fat.toFixed(2)} g </li> <li> sokeri: ${data[i].sugar.toFixed(2)} g </li> <li> suola: ${((data[i].salt) / 100).toFixed(2)} g </li>`;
                 document.querySelector("#ravinteetdiv").appendChild(uusili);
             }
         })
-    }
+}
 function haeAanet() {
 
     let ostostaulukko = []
@@ -327,6 +337,8 @@ function tyhjennaLista() {
 
         let ostosolio = new Tuote(ostos, 0);
 
+
+
         // luodaan DELETE -fetch-pyyntö. 
         fetch("http://localhost:3000/api/users/", {
             method: "DELETE",
@@ -339,8 +351,11 @@ function tyhjennaLista() {
             .then(data => console.log("poisto onnistunut, vastaus: " + data));
 
         listaelementti.remove();
-        ravinteetdiv.innerHTML = "";
+
     }
+    otsikko.innerHTML = "";
+    lista.innerHTML = "";
+    ravinteetdiv.innerHTML = "";
 }
 
 

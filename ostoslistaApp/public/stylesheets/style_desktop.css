@@ -7,11 +7,6 @@
   src: url(../fonts/AldithRegular.ttf)
 }
 
-@font-face {
-  font-family: kursivoitu;
-  src: url(../fonts/AldithGrunge.ttf)
-}
-
 .nappitehty, .nappipoista, .nappimuokkaa {
   float: right;
 }
@@ -75,7 +70,7 @@ hr {
 
 body {
   margin: 10px;
-  background-color: thistle;
+  background-color: whitesmoke;
 }
 
 a {
@@ -89,11 +84,10 @@ a {
 .grid-container {
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
-  grid-template-rows: 150px 150px 300px 300px;
+  grid-template-rows: 150px 150px 250px 300px;
 }
 
 header {
-  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 5;
   padding: 20px;
@@ -101,14 +95,12 @@ header {
 }
 
 main {
-  background-color: whitesmoke;
   grid-column-start: 1;
   grid-column-end: 3;
   grid-row-start: 2;
   grid-row-end: 5;
   padding: 20px;
   border-radius: 0 0 0px 20px;
-  overflow-y: auto;
 }
 
 img {
@@ -116,15 +108,12 @@ img {
 }
 
 aside {
-  background-color: whitesmoke;
   grid-column-start: 3;
   grid-column-end: 5;
   grid-row-start: 2;
-  grid-row-end: 5;
+  grid-row-end: 4;
   text-align: left;
   padding: 10px;
-  border-radius: 0 0 20px 0px;
-  overflow-y: auto;
 }
 
 #kuvadiv {
@@ -143,9 +132,9 @@ aside {
 
 #otsikko {
   margin-left: 20px;
-  font-family: kursivoitu;
   color: darkorchid;
   font-size: 200%;
+  text-transform: capitalize;
 }
 
 #ravinteetdiv {
@@ -161,6 +150,11 @@ li {
 }
 
 ol {
+  background-color: white;
+  border-radius: 20px;
+}
+
+#wrappi {
   background-color: white;
   border-radius: 20px;
 }
