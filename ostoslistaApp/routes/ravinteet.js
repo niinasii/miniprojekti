@@ -10,7 +10,7 @@ router.route('/:hakusana').get(function (req, res) { //lähettää pyynnön Fine
             //muuttaa jsoniksi
             return fetchres.json()
           })
-          .then(function (data) { //lähettää datan localhostille selaimelle
+          .then(function (data) { //lähettää datan selaimelle
             res.json(data)
           })
   })
