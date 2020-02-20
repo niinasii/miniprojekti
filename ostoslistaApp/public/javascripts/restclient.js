@@ -318,7 +318,7 @@ function haeAanet() {
                 ostostaulukko.push(sanat) //lisää ostostaulukkoon ostoslistan tuotteiden nimet
             console.log(sanat)
 
-    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=fi-fi&src=" //voice rss api-osoite
+    let osoite = "http://api.voicerss.org/?key=43217f932d0f4f50a047dbc4785fe8c3&hl=ru-ru&src=" //voice rss api-osoite
        
         document.getElementById("aani").src = osoite + ostostaulukko
         console.log(osoite)

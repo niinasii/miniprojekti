@@ -13,12 +13,12 @@
 
 li:hover {
   cursor: pointer;
-  background-color: pink;
-  border-radius: 20px 20px 20px 20px;
+  background-color: wheat;
+  border-radius: 10px 10px 10px 10px;
 }
 
 h1 {
-  color: darkorchid;
+  color: white;
   font-size: 500%;
   font-family: otsikko;
 }
@@ -50,27 +50,31 @@ h1 {
 
 button {
   background-color: white;
-  border-radius: 5px;
+  border-radius: 2px;
   border-width: 1px;
-  border-color: orchid;
-  box-shadow: darkorchid 1px 1px 3px;
+  border-color: grey;
+  box-shadow: silver 1px 1px 3px;
   margin-left: 5px;
 }
 
+.hakubtn {
+  margin-top: 5px;
+}
+
 input {
-  border-color: orchid;
+  border-color: black;
   border-width: 1px;
   padding: 2px;
   margin: 2px;
 }
 
 hr {
-  border: darkorchid 1px solid;
+  border: slategray 1px solid;
 }
 
 body {
-  margin: 10px;
-  background-color: whitesmoke;
+  margin: 0px;
+  background-color: lightyellow;
 }
 
 a {
@@ -91,7 +95,7 @@ header {
   grid-column-start: 1;
   grid-column-end: 5;
   padding: 20px;
-  border-radius: 20px 20px 0 0;
+  background-color: orange;
 }
 
 main {
@@ -117,7 +121,6 @@ aside {
 }
 
 #kuvadiv {
-  background-color: white;
   border-radius: 20px;
   padding: 20px;
   margin: 10px;
@@ -141,12 +144,14 @@ aside {
   margin-left: 20px;
 }
 
-form {
+#hakuform {
   margin-bottom: 50px;
+  padding: 20px;
 }
 
 li {
-  padding: 5px;
+  padding: 8px;
+  margin: 0px;
 }
 
 ol {
