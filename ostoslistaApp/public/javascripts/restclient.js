@@ -21,7 +21,7 @@ function yliviivaus() {
     let nappi = this;
     let ostos = nappi.parentElement;
     ostos.classList.toggle("yliviivaus"); // Lisää listaelementille luokan yliviivaus -otto
-    nappi.innerText === "Peruuta" ? nappi.innerText = "Kerätty" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
+    nappi.innerText === "Peruuta" ? nappi.innerText = "✓" : nappi.innerText = "Peruuta"; //vaihtaa napin tekstin
 }
 
 //poistaa yhden listaelementin sekä clientti- että palvelinpäästä
@@ -194,15 +194,16 @@ function lisääListalle(ostos) {
     //luodaan listaitemille napit ja niiden toiminnallisuudet
     let lista = document.querySelector('#lista'); //luo muuttujan valitsemastaan html-dokumentin elementistä
     let ostosLi = document.createElement('li'); //luodaan uusi lista-elementti
+    ostosLi.setAttribute("class", "ostosli");
     ostosLi.innerHTML = `${ostos.hakusana} x ${ostos.maara} ${ostos.yksikko} `; //asetetaan lista-elementin arvoksi käyttjän syöttämä hakusana ja määrä
     let nappitehty = document.createElement('button'); // uusi muuttuja & luodaan samalla html-elementti
-    nappitehty.innerText = "Kerätty"; //napin tekstiksi Tehty
+    nappitehty.innerText = "✓"; //napin tekstiksi Tehty
     let nappipoista = document.createElement('button'); //uusi muuttuja & luodaan samalla html-elementti
-    nappipoista.innerText = "Poista"; //napin tekstiksi Poista
+    nappipoista.innerText = "⌫"; //napin tekstiksi Poista
     let nappimuokkaa = document.createElement("button");
-    nappimuokkaa.innerText = "Muokkaa";
+    nappimuokkaa.innerText = "✎"; //napin tekstiksi muokkaa
     let nappiravinto = document.createElement("button");
-    nappiravinto.innerText = "Näytä ravintosisältö";
+    nappiravinto.innerText = "?";
     ostosLi.appendChild(nappiravinto); //lisätään itemille ravintosisältöpainike
     ostosLi.appendChild(nappipoista); //listään ostosLi-html elementiin nappipoista
     ostosLi.appendChild(nappimuokkaa); //lisätään ostosLi-elementille nappi muokkaa
@@ -219,7 +220,13 @@ function lisääListalle(ostos) {
     nappitehty.classList.add("nappitehty");
     nappipoista.classList.add("nappipoista");
     nappimuokkaa.classList.add("nappimuokkaa");
-    nappiravinto.classList.add("nappimuokkaa");
+    nappiravinto.classList.add("nappiravinto");
+
+    //annetaan napeille myös altit -Niina
+    nappitehty.setAttribute("alt", "Tuote kerätty");
+    nappimuokkaa.setAttribute("alt", "Muokkaa tuotetta listalla");
+    nappipoista.setAttribute("alt", "Poista tuote listalta");
+    nappiravinto.setAttribute("alt", "Näytä tuotteen ravintosisältö")
 }
 
 function haeKuva() {
@@ -238,12 +245,14 @@ function haeKuvaListasta(event) {
     let regex = /^[A-ZÅÄÖ]+/i;
     let listaTuote;
     if (event.path) {
+        console.log(event.path);
         listaTuote = event.path[0].innerText.match(regex)[0];
     } else {
         console.log("ei löydy.");
         return;
     }
-    //tämä erittäin köykäinen if-else if-else -lauseke estää klikkausten aiheuttamat ei-toivotut kuvahaut. En ole tästä ylpeä.
+    
+    //tämä erittäin köykäinen if-else if-else -lauseke estää klikkausten aiheuttamat ei-toivotut kuvahaut. En ole tästä ylpeä. 
     if (listaTuote === "Muokkaa" || listaTuote === "Peruuta" || listaTuote === "Kerätty" || listaTuote === "Poista" || listaTuote === "poisto") {
         listaTuote = event.path[1].innerText.match(regex)[0];
     } else if (listaTuote === "kpl") {
@@ -306,6 +315,7 @@ function haeRavinteetListasta() {
             }
         })
 }
+
 function haeAanet() {
 
     let ostostaulukko = []
@@ -337,8 +347,6 @@ function tyhjennaLista() {
 
         let ostosolio = new Tuote(ostos, 0);
 
-
-
         // luodaan DELETE -fetch-pyyntö. 
         fetch("http://localhost:3000/api/users/", {
             method: "DELETE",
@@ -357,9 +365,6 @@ function tyhjennaLista() {
     lista.innerHTML = "";
     ravinteetdiv.innerHTML = "";
 }
-
-
-
 
 tallennusbtn.addEventListener("click", lähetys);
 window.addEventListener("DOMContentLoaded", listaus);

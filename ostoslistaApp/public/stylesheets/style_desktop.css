@@ -2,25 +2,28 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+body {
+  margin: 0px;
+  background-color: lightyellow;
+}
+
 @font-face {
   font-family: otsikko;
   src: url(../fonts/AldithRegular.ttf)
 }
 
-.nappitehty, .nappipoista, .nappimuokkaa {
-  float: right;
-}
 
-li:hover {
-  cursor: pointer;
-  background-color: wheat;
-  border-radius: 10px 10px 10px 10px;
-}
 
 h1 {
   color: white;
   font-size: 500%;
   font-family: otsikko;
+  margin: 0px;
+  margin-top: 50px;
+}
+
+h2 {
+  color: orange;
 }
 
 /*ANIMOINTI*/
@@ -49,16 +52,29 @@ h1 {
 /*LOMAKE */
 
 button {
-  background-color: white;
-  border-radius: 2px;
-  border-width: 1px;
-  border-color: grey;
-  box-shadow: silver 1px 1px 3px;
+  background-color: orange;
+  border: 0px;
   margin-left: 5px;
+  padding: 5px;
+  color: white;
 }
 
 .hakubtn {
   margin-top: 5px;
+}
+
+button:hover {
+  background-color: orangered;
+}
+
+.nappitehty {
+  float: right;
+  height: 26px;
+}
+.nappimuokkaa, .nappipoista, .nappiravinto{
+  width: 26px;
+  height: 26px;
+  float: right;
 }
 
 input {
@@ -68,22 +84,41 @@ input {
   margin: 2px;
 }
 
+.ostosli {
+  padding: 10px;
+  height: 30px;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.ostosli:hover {
+  cursor: pointer;
+  background-color: wheat;
+}
+
+li {
+  padding: 5px;
+}
+
+ol {
+  background-color: white;
+  border-radius: 10px;
+}
+
 hr {
   border: slategray 1px solid;
 }
 
-body {
-  margin: 0px;
-  background-color: lightyellow;
-}
 
 a {
-  color: #00B7FF;
+  color: red;
 }
 
 .yliviivaus {
   text-decoration: line-through;
 }
+
+
+/* GRID */
 
 .grid-container {
   display: grid;
@@ -135,9 +170,9 @@ aside {
 
 #otsikko {
   margin-left: 20px;
-  color: darkorchid;
+  color: orange;
   font-size: 200%;
-  text-transform: capitalize;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
 #ravinteetdiv {
@@ -149,17 +184,10 @@ aside {
   padding: 20px;
 }
 
-li {
-  padding: 8px;
-  margin: 0px;
-}
 
-ol {
-  background-color: white;
-  border-radius: 20px;
-}
 
 #wrappi {
   background-color: white;
   border-radius: 20px;
 }
+
